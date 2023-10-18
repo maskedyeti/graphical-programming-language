@@ -17,9 +17,32 @@ namespace graphical_programming_language
             InitializeComponent();
         }
 
-        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) 
+            {
+                List<string> commandList = Parser.processSingleLine(textBox2.Text);
+
+                if (commandList != null) 
+                {
+                    if (commandList[0] == "error")
+                    {
+                        MessageBox.Show((commandList[1]));
+                    }
+                }
+            }
         }
     }
 }
