@@ -24,7 +24,7 @@ namespace graphical_programming_language
 
         public static List<string> processSingleLine(String command)//method to split inputted line of command into a list and validate it
         {
-            List<string> commandList = new List<string> {};
+            List<string> commandList = new List<string> {"empty", "empty"};
 
             bool commandEmpty = string.IsNullOrWhiteSpace(command);//checks if the their is a command present
 
@@ -37,27 +37,35 @@ namespace graphical_programming_language
 
             else if (commandEmpty == false)
             {
-
                 commandList = command.Split(' ').ToList();
- 
-                if (validCommands.Contains(commandList[0]) == true) 
-                { 
-                    if (twoIntCommands.Contains(commandList[0]) == true)
-                    {
-                        if (int.TryParse(commandList[1], out _)   == true)
-                        {
-                            if (int.TryParse(commandList[2], out _) == true) 
 
+                if (validCommands.Contains(commandList[0]) == true)
+                {
+                    if (twoIntCommands.Contains(commandList[0]) == true) //two integer command and parameter validation
+                    {
+                        if (commandList.Count == 3)
+                        {
+                            if (int.TryParse(commandList[1], out _) == true)
                             {
-                            }
-                            else
-                            {
-                                commandList[0] = "error";
-                                commandList[1] = "please enter 2 integers";
+                                if (int.TryParse(commandList[2], out _) == true)
+
+                                {
+                                }
+                                else
+                                {
+                                    commandList[0] = "error";
+                                    commandList[1] = "please enter 2 integers";
+                                }
                             }
                         }
+                        else 
+                        {
+                            commandList[0] = "error";
+                            commandList[1] = "please enter 2 integers";
+                        }
                     }
-                    if (noInputCommands.Contains(commandList[0]) == true)
+
+                    if (noInputCommands.Contains(commandList[0]) == true) //no additional input command and parameter validation
                     {
                         if (commandList.Count == 1)
                         {
@@ -68,13 +76,19 @@ namespace graphical_programming_language
                             commandList[1] = "no additional entry required";
                         }
                     }
-                    if (oneIntCommands.Contains(commandList[0]))
+
+                    if (oneIntCommands.Contains(commandList[0]))//one integer command and parameter validation
                     {
-                        if (int.TryParse(commandList[1], out _))
+                        if (commandList.Count == 2)
                         {
-                        }
-                        else if (commandList.Count == 2)
-                        {
+                            if (int.TryParse(commandList[1], out _))
+                            {
+                            }
+                            else
+                            {
+                                commandList[0] = "error";
+                                commandList[1] = "please enter one additional number";
+                            }
                         }
                         else 
                         {
@@ -82,6 +96,7 @@ namespace graphical_programming_language
                             commandList[1] = "please enter one additional number";
                         }
                     }
+
                     if (stringCommands.Contains(commandList[0]))
                     {
                         if (commandList[0] == "fill")
