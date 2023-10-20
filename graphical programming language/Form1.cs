@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace graphical_programming_language
 {
     public partial class Form1 : Form
-    {
+    {    
         public Form1()
         {
             InitializeComponent();
@@ -37,13 +37,18 @@ namespace graphical_programming_language
                 if (commandList[0] == "error")
                 {
                     MessageBox.Show((commandList[1]));
-                        
+
                 }
                 else
                 {
                     if ((commandList[0] == "moveto"))
                     {
                         commands.paintBrush(paintBrushPanel, int.Parse(commandList[1]), int.Parse(commandList[2]));
+                    }
+                    else if ((commandList[0]) == "rectangle")
+                    {
+                        commands.rectangle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
+                                                            int.Parse(commandList[1]), int.Parse(commandList[2]));
                     }
                 }
             }

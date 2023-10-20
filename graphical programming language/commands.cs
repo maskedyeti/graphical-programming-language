@@ -11,13 +11,13 @@ namespace graphical_programming_language
 {
     class commands
     {
-        static List<int> brushCoordinates = new List<int> { 150, 150 };
-        public static void paint(Panel panel, int xCoordinates, int yCoordinates)
+        public static List<int> brushCoordinates = new List<int> { 150, 150 };
+        public static void rectangle(Panel panel, int height, int width, int xCoordinates, int yCoordinates)
         {
             using (Graphics g = panel.CreateGraphics())
             {
                 Pen pen = new Pen(Color.Black, 1);
-                g.DrawRectangle(pen, xCoordinates, yCoordinates, 5, 5);
+                g.DrawRectangle(pen, width, height, xCoordinates, yCoordinates);
             }
         }
 
