@@ -33,6 +33,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.paintBrushPanel = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
@@ -65,9 +67,10 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel1.Controls.Add(this.paintBrushPanel);
             this.panel1.Location = new System.Drawing.Point(422, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(631, 410);
+            this.panel1.Size = new System.Drawing.Size(909, 527);
             this.panel1.TabIndex = 4;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -80,11 +83,20 @@
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
             // 
+            // paintBrushPanel
+            // 
+            this.paintBrushPanel.BackColor = System.Drawing.Color.Red;
+            this.paintBrushPanel.Location = new System.Drawing.Point(445, 262);
+            this.paintBrushPanel.Name = "paintBrushPanel";
+            this.paintBrushPanel.Size = new System.Drawing.Size(10, 10);
+            this.paintBrushPanel.TabIndex = 0;
+            this.paintBrushPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.paintBrushPanel_Paint);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1097, 471);
+            this.ClientSize = new System.Drawing.Size(1343, 551);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button2);
@@ -93,6 +105,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -105,6 +118,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Panel paintBrushPanel;
     }
 }
 

@@ -30,7 +30,6 @@ namespace graphical_programming_language
 
         private void textBox2_KeyDown(object sender, KeyEventArgs e)
         {
-            commands.paintBrush(panel1, 100, 100);
             if (e.KeyCode == Keys.Enter) 
             {
                 List<string> commandList = Parser.processSingleLine(textBox2.Text);
@@ -42,10 +41,9 @@ namespace graphical_programming_language
                 }
                 else
                 {
-                    //MessageBox.Show(commandList[0]);
                     if ((commandList[0] == "moveto"))
                     {
-                        commands.paintBrush(panel1, int.Parse(commandList[1]), int.Parse(commandList[2]));
+                        commands.paintBrush(paintBrushPanel, int.Parse(commandList[1]), int.Parse(commandList[2]));
                     }
                 }
             }
@@ -58,7 +56,11 @@ namespace graphical_programming_language
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            commands.paintBrush(panel1,100, 100);
+        }
+
+        public void paintBrushPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
