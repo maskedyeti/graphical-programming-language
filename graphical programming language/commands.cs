@@ -11,7 +11,6 @@ namespace graphical_programming_language
 {
     class commands
     {
-        public static List<int> brushCoordinates = new List<int> { 150, 150 };
         public static void rectangle(Panel panel, int height, int width, int xCoordinates, int yCoordinates)
         {
             using (Graphics g = panel.CreateGraphics())
@@ -24,8 +23,6 @@ namespace graphical_programming_language
         public static void paintBrush(Panel panel, int xCoordinates, int yCoordinates) 
         {
             panel.Location = new Point(xCoordinates, yCoordinates);
-            brushCoordinates[0] = xCoordinates;
-            brushCoordinates[1] = yCoordinates;
             
         }
     }
