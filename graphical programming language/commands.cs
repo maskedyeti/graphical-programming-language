@@ -31,7 +31,8 @@ namespace graphical_programming_language
             using (Graphics g = panel.CreateGraphics())
             {
                 Pen pen = new Pen(Color.Black, 1);
-                g.DrawEllipse(pen, xCoordinates - radius /2 , yCoordinates - radius /2 , radius , radius );
+                g.DrawEllipse(pen, xCoordinates - radius /2 , yCoordinates - radius /2 , radius , radius ); // /2 to make the rectangle thats used as base for the circle
+                                                                                                            // instead of being drawn from the top leftpoint of paintbrush put to make the paintbrush the centre
             }
         }
 
@@ -40,6 +41,13 @@ namespace graphical_programming_language
             using (Graphics g = panel.CreateGraphics())
             {
                 Pen pen = new Pen(Color.Black, 1);
+                Point[] trianglePoints = new Point[]
+                {
+                    new Point(xCoordinates, yCoordinates - height), // Top point
+                    new Point(xCoordinates, yCoordinates), // Bottom-left point
+                    new Point(xCoordinates + width, yCoordinates)  // Bottom-right point
+                };
+                g.DrawPolygon(pen, trianglePoints);
                
             }
         }

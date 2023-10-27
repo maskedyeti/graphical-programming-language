@@ -58,7 +58,7 @@ namespace graphical_programming_language
                     {
                         commands.circle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y, int.Parse(commandList[1]));
                     }
-                    else if (commandList[0] == "rectangle")
+                    else if (commandList[0] == "triangle")
                     {
                         commands.triangle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
                                                             int.Parse(commandList[1]), int.Parse(commandList[2]));
