@@ -31,8 +31,8 @@ namespace graphical_programming_language
             using (Graphics g = panel.CreateGraphics())
             {
                 Pen pen = new Pen(Color.Black, 1);
-                g.DrawEllipse(pen, xCoordinates - radius /2 , yCoordinates - radius /2 , radius , radius ); // /2 to make the rectangle thats used as base for the circle
-                                                                                                            // instead of being drawn from the top leftpoint of paintbrush put to make the paintbrush the centre
+                g.DrawEllipse(pen, xCoordinates - radius /2 , yCoordinates - radius /2 , radius , radius ); // /2 centers the rectangle made as the base of the circle around the paintbrush
+                                                                                                            
             }
         }
 
@@ -49,6 +49,19 @@ namespace graphical_programming_language
                 };
                 g.DrawPolygon(pen, trianglePoints);
                
+            }
+        }
+        public static void drawto(Panel panel, Panel paintbrush, int xCoordinates, int yCoordinates, int newXcoordinates, int newYcoordinates)
+        {
+            using (Graphics g = panel.CreateGraphics())
+            {
+                Pen pen = new Pen(Color.Black, 1);
+
+                Point originalPoints = new Point(xCoordinates, yCoordinates);
+                Point drawtoPoints = new Point(newXcoordinates, newYcoordinates);
+
+                g.DrawLine(pen, originalPoints, drawtoPoints);
+                paintBrush(paintbrush, newXcoordinates, newYcoordinates); //moves paintbrush with line
             }
         }
     }

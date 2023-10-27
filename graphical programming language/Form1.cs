@@ -63,6 +63,11 @@ namespace graphical_programming_language
                         commands.triangle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
                                                             int.Parse(commandList[1]), int.Parse(commandList[2]));
                     }
+                    else if (((commandList[0]) == "drawto"))
+                    {
+                        commands.drawto(panel1,paintBrushPanel, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
+                                                            int.Parse(commandList[1]), int.Parse(commandList[2]));
+                    }
                 }
             }
         }
