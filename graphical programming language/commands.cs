@@ -25,5 +25,6 @@ namespace graphical_programming_language
             panel.Location = new Point(xCoordinates, yCoordinates);
             
         }
+
     }
 }
