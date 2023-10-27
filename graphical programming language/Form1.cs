@@ -54,6 +54,10 @@ namespace graphical_programming_language
                     {
                         panel1.Invalidate();
                     }
+                    else if ((commandList[0]) == "circle")
+                    {
+                        commands.circle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y, int.Parse(commandList[1]));
+                    }
                 }
             }
         }
