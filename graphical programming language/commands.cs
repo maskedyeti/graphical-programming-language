@@ -11,12 +11,12 @@ namespace graphical_programming_language
 {
     class commands
     {
-        public static void rectangle(Panel panel, int height, int width, int xCoordinates, int yCoordinates)
+        public static void rectangle(Panel panel, int xCoordinates, int yCoordinates, int height, int width)
         {
             using (Graphics g = panel.CreateGraphics())
             {
                 Pen pen = new Pen(Color.Black, 1);
-                g.DrawRectangle(pen, width, height, xCoordinates, yCoordinates);
+                g.DrawRectangle(pen,xCoordinates, yCoordinates, height, width);
             }
         }
 
@@ -32,6 +32,15 @@ namespace graphical_programming_language
             {
                 Pen pen = new Pen(Color.Black, 1);
                 g.DrawEllipse(pen, xCoordinates - radius /2 , yCoordinates - radius /2 , radius , radius );
+            }
+        }
+
+        public static void triangle(Panel panel, int xCoordinates, int yCoordinates, int width, int height)
+        {
+            using (Graphics g = panel.CreateGraphics())
+            {
+                Pen pen = new Pen(Color.Black, 1);
+               
             }
         }
     }
