@@ -75,7 +75,7 @@ namespace graphical_programming_language
                     new Point(xCoordinates, yCoordinates), // Bottom-left point
                     new Point(xCoordinates + width, yCoordinates)  // Bottom-right point
                 };
-
+          
                 if (fill == false)
                 {
                     g.DrawPolygon(commands.DrawingPen, trianglePoints);

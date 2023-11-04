@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace graphical_programming_language
 {
@@ -18,7 +19,7 @@ namespace graphical_programming_language
 
         //contains commands and their requiredparameters for input validation
         static List<string> twoIntCommands = new List<string> {"moveto", "drawto", "rectangle", "triangle"}; 
-        static List<string> noInputCommands = new List<string> {"clear", "reset"};
+        static List<string> noInputCommands = new List<string> {"clear", "reset", "run"};
         static List<string> oneIntCommands = new List<string> { "circle" };
         static List<string> stringCommands = new List<string> { "pen", "fill"};
 
@@ -132,6 +133,22 @@ namespace graphical_programming_language
             }
 
             return commandList;
+        }
+
+        public static List<string> multiLineProcess(System.Windows.Forms.TextBox userInput)
+        {
+            List<string> commandLines = new List<string> ();
+           
+            foreach (string line in userInput.Lines)
+            {
+                List<string> lineCommandList = Parser.processSingleLine(line);
+
+                string lineCommandString = string.Join(" ", lineCommandList);
+                
+                commandLines.Add(lineCommandString);
+            }
+
+            return commandLines;
         }
     }
 }

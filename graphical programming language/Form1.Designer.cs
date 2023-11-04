@@ -32,8 +32,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.paintBrushPanel = new System.Windows.Forms.Panel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,6 +54,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "run";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -74,15 +75,6 @@
             this.panel1.TabIndex = 4;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(19, 401);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(393, 22);
-            this.textBox2.TabIndex = 0;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
-            // 
             // paintBrushPanel
             // 
             this.paintBrushPanel.BackColor = System.Drawing.Color.Red;
@@ -91,6 +83,15 @@
             this.paintBrushPanel.Size = new System.Drawing.Size(10, 10);
             this.paintBrushPanel.TabIndex = 0;
             this.paintBrushPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.paintBrushPanel_Paint);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(19, 401);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(393, 22);
+            this.textBox2.TabIndex = 0;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
             // 
             // Form1
             // 
