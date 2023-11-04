@@ -18,9 +18,11 @@ namespace graphical_programming_language
 
         //contains commands and their requiredparameters for input validation
         static List<string> twoIntCommands = new List<string> {"moveto", "drawto", "rectangle", "triangle"}; 
-        static List<string> noInputCommands = new List<string> {"pen", "clear", "reset"};
+        static List<string> noInputCommands = new List<string> {"clear", "reset"};
         static List<string> oneIntCommands = new List<string> { "circle" };
         static List<string> stringCommands = new List<string> { "pen", "fill"};
+
+        static List<string> validColour = new List<string> { "red", "blue", "black", "green", "purple" };
 
         public static List<string> processSingleLine(String command)//method to split inputted line of command into a list and validate it
         {
@@ -37,11 +39,11 @@ namespace graphical_programming_language
 
             else if (commandEmpty == false)
             {
-                commandList = command.Split(' ').ToList();
+                commandList = command.Split(' ').ToList(); //splits list based off space 
 
-                if (validCommands.Contains(commandList[0]) == true)
+                if (validCommands.Contains(commandList[0]))
                 {
-                    if (twoIntCommands.Contains(commandList[0]) == true) //two integer command and parameter validation
+                    if (twoIntCommands.Contains(commandList[0])) //two integer command and parameter validation
                     {
                         if (commandList.Count == 3)
                         {
@@ -65,7 +67,7 @@ namespace graphical_programming_language
                         }
                     }
 
-                    if (noInputCommands.Contains(commandList[0]) == true) //no additional input command and parameter validation
+                    if (noInputCommands.Contains(commandList[0])) //no additional input command and parameter validation
                     {
                         if (commandList.Count == 1)
                         {
@@ -116,7 +118,14 @@ namespace graphical_programming_language
 
                         if (commandList[0] == "pen")// come back to 
                         {
-                            
+                            if (validColour.Contains(commandList[1]))
+                            {
+                            }
+                            else
+                            {
+                                commandList[0] = "error";
+                                commandList[1] = "please select a valid colour";
+                            }
                         }
                     }
                 }

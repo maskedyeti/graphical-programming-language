@@ -10,17 +10,31 @@ using System.Windows.Forms;
 namespace graphical_programming_language
 {
     class commands
+
     {
+        public static Pen DrawingPen { get; private set; }
+
+        public static void DrawingManager()
+        {
+            // Initialize the Pen with the default color (black)
+            DrawingPen = new Pen(Color.Black);
+        }
+
+        public static void penColour(Color color)
+        {
+            // Set the color of the Pen
+            DrawingPen.Color = color;
+        }
+
         public static void rectangle(Panel panel, int xCoordinates, int yCoordinates, int height, int width)
         {
             using (Graphics g = panel.CreateGraphics())
             {
-                Pen pen = new Pen(Color.Black, 1);
-                g.DrawRectangle(pen,xCoordinates, yCoordinates, height, width);
+                g.DrawRectangle(commands.DrawingPen,xCoordinates, yCoordinates, height, width);
             }
         }
 
-        public static void paintBrush(Panel panel, int xCoordinates, int yCoordinates) 
+        public static void paintBrush(Panel panel, int xCoordinates, int yCoordinates) //change location of "paintbrush" panel
         {
             panel.Location = new Point(xCoordinates, yCoordinates);
             
@@ -30,8 +44,8 @@ namespace graphical_programming_language
         {
             using (Graphics g = panel.CreateGraphics())
             {
-                Pen pen = new Pen(Color.Black, 1);
-                g.DrawEllipse(pen, xCoordinates - radius /2 , yCoordinates - radius /2 , radius , radius ); // /2 centers the rectangle made as the base of the circle around the paintbrush
+
+                g.DrawEllipse(commands.DrawingPen, xCoordinates - radius /2 , yCoordinates - radius /2 , radius , radius ); // /2 centers the rectangle made as the base of the circle around the paintbrush
                                                                                                             
             }
         }
@@ -40,14 +54,14 @@ namespace graphical_programming_language
         {
             using (Graphics g = panel.CreateGraphics())
             {
-                Pen pen = new Pen(Color.Black, 1);
+
                 Point[] trianglePoints = new Point[]
                 {
                     new Point(xCoordinates, yCoordinates - height), // Top point
                     new Point(xCoordinates, yCoordinates), // Bottom-left point
                     new Point(xCoordinates + width, yCoordinates)  // Bottom-right point
                 };
-                g.DrawPolygon(pen, trianglePoints);
+                g.DrawPolygon(commands.DrawingPen, trianglePoints);
                
             }
         }
@@ -55,12 +69,11 @@ namespace graphical_programming_language
         {
             using (Graphics g = panel.CreateGraphics())
             {
-                Pen pen = new Pen(Color.Black, 1);
 
                 Point originalPoints = new Point(xCoordinates, yCoordinates);
                 Point drawtoPoints = new Point(newXcoordinates, newYcoordinates);
 
-                g.DrawLine(pen, originalPoints, drawtoPoints);
+                g.DrawLine(commands.DrawingPen, originalPoints, drawtoPoints);
                 paintBrush(paintbrush, newXcoordinates, newYcoordinates); //moves paintbrush with line
             }
         }

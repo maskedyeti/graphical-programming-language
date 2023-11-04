@@ -15,6 +15,7 @@ namespace graphical_programming_language
         public Form1()
         {
             InitializeComponent();
+            commands.DrawingManager();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -63,10 +64,14 @@ namespace graphical_programming_language
                         commands.triangle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
                                                             int.Parse(commandList[1]), int.Parse(commandList[2]));
                     }
-                    else if (((commandList[0]) == "drawto"))
+                    else if ((commandList[0]) == "drawto")
                     {
                         commands.drawto(panel1,paintBrushPanel, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
                                                             int.Parse(commandList[1]), int.Parse(commandList[2]));
+                    }
+                    else if ((commandList[0]) =="pen")
+                    {
+                        commands.penColour(Color.FromName(commandList[1]));
                     }
                 }
             }
