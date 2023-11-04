@@ -116,7 +116,7 @@ namespace graphical_programming_language
                             }
                         }
 
-                        if (commandList[0] == "pen")// come back to 
+                        if (commandList[0] == "pen")
                         {
                             if (validColour.Contains(commandList[1]))
                             {

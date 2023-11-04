@@ -15,8 +15,10 @@ namespace graphical_programming_language
         public Form1()
         {
             InitializeComponent();
-            commands.DrawingManager();
+            commands.DrawingManager(); //initialises pen object
         }
+
+        private Boolean fill = false;
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -49,7 +51,7 @@ namespace graphical_programming_language
                     else if ((commandList[0]) == "rectangle")
                     {
                         commands.rectangle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
-                                                            int.Parse(commandList[1]), int.Parse(commandList[2]));
+                                                            int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
                     }
                     else if ((commandList[0]) == "clear")
                     {
@@ -57,12 +59,12 @@ namespace graphical_programming_language
                     }
                     else if ((commandList[0]) == "circle")
                     {
-                        commands.circle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y, int.Parse(commandList[1]));
+                        commands.circle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y, int.Parse(commandList[1]), fill);
                     }
                     else if (commandList[0] == "triangle")
                     {
                         commands.triangle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
-                                                            int.Parse(commandList[1]), int.Parse(commandList[2]));
+                                                            int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
                     }
                     else if ((commandList[0]) == "drawto")
                     {
@@ -72,6 +74,19 @@ namespace graphical_programming_language
                     else if ((commandList[0]) =="pen")
                     {
                         commands.penColour(Color.FromName(commandList[1]));
+                    }
+                    else if (((commandList[0]) == "fill"))
+                    {
+                        
+                        if (commandList[1] == "on")
+                        {
+                            fill = true;
+
+                        }
+                        else if (commandList[1] == "off")
+                        {
+                            fill = false;
+                        }
                     }
                 }
             }
