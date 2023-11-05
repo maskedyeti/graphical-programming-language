@@ -113,9 +113,14 @@ namespace graphical_programming_language
 
         private void button1_Click(object sender, EventArgs e)
         {
-            foreach (string line in textBox1.Lines)
+            List<string> multiLine = Parser.multiLineProcess(textBox1);
+       
+            for (int i = 0; i < multiLine.Count; i++) //DELETE using for loop to keep track of which line is faulty in syntax checking
             {
-                MessageBox.Show(textBox1.Lines[0]);
+
+                List<string> commandList = multiLine[i].Split(' ').ToList();
+                
+                executeLine(commandList);
             }
         }
     }

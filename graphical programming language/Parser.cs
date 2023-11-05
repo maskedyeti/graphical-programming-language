@@ -34,7 +34,7 @@ namespace graphical_programming_language
             if (commandEmpty == true) 
             {
                 commandList[0] = "error";
-                commandList[1] = "please enter a command";
+                commandList[1] = "unknown command";
 
             }
 
@@ -57,14 +57,14 @@ namespace graphical_programming_language
                                 else
                                 {
                                     commandList[0] = "error";
-                                    commandList[1] = "please enter 2 integers";
+                                    commandList[1] = "invalid/missing parameter";
                                 }
                             }
                         }
                         else 
                         {
                             commandList[0] = "error";
-                            commandList[1] = "please enter 2 integers";
+                            commandList[1] = "invalid/missing parameter";
                         }
                     }
 
@@ -76,7 +76,7 @@ namespace graphical_programming_language
                         else
                         {
                             commandList[0] = "error";
-                            commandList[1] = "no additional entry required";
+                            commandList[1] = "unnecerssary parameter";
                         }
                     }
 
@@ -90,13 +90,13 @@ namespace graphical_programming_language
                             else
                             {
                                 commandList[0] = "error";
-                                commandList[1] = "please enter one additional number";
+                                commandList[1] = "invalid/missing parameter";
                             }
                         }
                         else 
                         {
                             commandList[0] = "error";
-                            commandList[1] = "please enter one additional number";
+                            commandList[1] = "invalid/missing parameter";
                         }
                     }
 
@@ -113,7 +113,7 @@ namespace graphical_programming_language
                             else
                             {
                                 commandList[0] = "error";
-                                commandList[1] = "please select on or off";
+                                commandList[1] = "invalid/missing parameter";
                             }
                         }
 
@@ -125,7 +125,7 @@ namespace graphical_programming_language
                             else
                             {
                                 commandList[0] = "error";
-                                commandList[1] = "please select a valid colour";
+                                commandList[1] = "invalid/missing parameter";
                             }
                         }
                     }
@@ -135,13 +135,13 @@ namespace graphical_programming_language
             return commandList;
         }
 
-        public static List<string> multiLineProcess(System.Windows.Forms.TextBox userInput)
+        public static List<string> multiLineProcess(System.Windows.Forms.TextBox userInput) //breaks down each line into a list element after validating
         {
-            List<string> commandLines = new List<string> ();
-           
-            foreach (string line in userInput.Lines)
+            List<string> commandLines = new List<string> (); //stores singular lines of command after validation
+   
+            foreach (string line in userInput.Lines) 
             {
-                List<string> lineCommandList = Parser.processSingleLine(line);
+                List<string> lineCommandList = Parser.processSingleLine(line); //validates singular line
 
                 string lineCommandString = string.Join(" ", lineCommandList);
                 
