@@ -27,20 +27,20 @@ namespace graphical_programming_language
 
         public static List<string> processSingleLine(String command)//method to split inputted line of command into a list and validate it
         {
-            List<string> commandList = new List<string> {"empty", "empty"};
+            List<string> validCommandList = new List<string> {"empty", "empty"};
 
             bool commandEmpty = string.IsNullOrWhiteSpace(command);//checks if the their is a command present
 
             if (commandEmpty == true) 
             {
-                commandList[0] = "error";
-                commandList[1] = "unknown command";
+                validCommandList[0] = "error";
+                validCommandList[1] = "no command";
 
             }
 
             else if (commandEmpty == false)
             {
-                commandList = command.Split(' ').ToList(); //splits list based off space 
+                List<string> commandList = command.Split(' ').ToList(); //splits list based off space 
 
                 if (validCommands.Contains(commandList[0]))
                 {
@@ -56,15 +56,15 @@ namespace graphical_programming_language
                                 }
                                 else
                                 {
-                                    commandList[0] = "error";
-                                    commandList[1] = "invalid/missing parameter";
+                                    validCommandList[0] = "error";
+                                    validCommandList[1] = "invalid/missing parameter, " + commandList[0] +" requires 2 integers";
                                 }
                             }
                         }
                         else 
                         {
-                            commandList[0] = "error";
-                            commandList[1] = "invalid/missing parameter";
+                            validCommandList[0] = "error";
+                            validCommandList[1] = "invalid/missing parameter, " + commandList[0] + " requires 2 integers";
                         }
                     }
 
@@ -75,8 +75,8 @@ namespace graphical_programming_language
                         }
                         else
                         {
-                            commandList[0] = "error";
-                            commandList[1] = "unnecerssary parameter";
+                            validCommandList[0] = "error";
+                            validCommandList[1] = "unnecerssary parameter, " + commandList[0] + " does not require a parameter";
                         }
                     }
 
@@ -89,14 +89,14 @@ namespace graphical_programming_language
                             }
                             else
                             {
-                                commandList[0] = "error";
-                                commandList[1] = "invalid/missing parameter";
+                                validCommandList[0] = "error";
+                                validCommandList[1] = "invalid/missing parameter " + commandList[0] + " requires one integer";
                             }
                         }
                         else 
                         {
-                            commandList[0] = "error";
-                            commandList[1] = "invalid/missing parameter";
+                            validCommandList[0] = "error";
+                            validCommandList[1] = "invalid/missing parameter " + commandList[0] + " requires one integer";
                         }
                     }
 
@@ -112,8 +112,8 @@ namespace graphical_programming_language
                             }
                             else
                             {
-                                commandList[0] = "error";
-                                commandList[1] = "invalid/missing parameter";
+                                validCommandList[0] = "error";
+                                validCommandList[1] = "invalid/missing parameter " + commandList[0] + " requires either an 'on' or 'off' parameter selection";
                             }
                         }
 
@@ -124,31 +124,53 @@ namespace graphical_programming_language
                             }
                             else
                             {
-                                commandList[0] = "error";
-                                commandList[1] = "invalid/missing parameter";
+                                validCommandList[0] = "error";
+                                validCommandList[1] = "invalid/missing parameter" + commandList[0] + " requires the selection of a 'red', 'blue', 'black', 'green' or 'purple' parameter";
                             }
                         }
                     }
+
+                }
+                else
+                {
+                    MessageBox.Show(commandList[0]);
+                    validCommandList[0] = "error";
+                    validCommandList[1] = "unrecognised command";
                 }
             }
 
-            return commandList;
+            return validCommandList;
         }
 
         public static List<string> multiLineProcess(System.Windows.Forms.TextBox userInput) //breaks down each line into a list element after validating
         {
             List<string> commandLines = new List<string> (); //stores singular lines of command after validation
-   
-            foreach (string line in userInput.Lines) 
+            List<string> errorList = new List<string> {"error"};
+            string[] lines = userInput.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < lines.Length; i++)
             {
-                List<string> lineCommandList = Parser.processSingleLine(line); //validates singular line
+                List<string> lineCommandList = Parser.processSingleLine(lines[i]); //validates singular line
 
                 string lineCommandString = string.Join(" ", lineCommandList);
-                
+
+                if (lineCommandList[0] == "error")
+                {
+                    int lineNumber = i + 1;
+                    errorList.Add("line " + lineNumber.ToString() + ", " + lineCommandList[1]);
+                }
+
                 commandLines.Add(lineCommandString);
             }
 
-            return commandLines;
+            if (errorList.Count > 1)
+            {
+                return errorList;
+            }
+            else
+            {
+                return commandLines;
+            }
         }
     }
 }

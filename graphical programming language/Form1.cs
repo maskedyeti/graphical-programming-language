@@ -111,16 +111,49 @@ namespace graphical_programming_language
 
         }
 
+
         private void button1_Click(object sender, EventArgs e)
         {
             List<string> multiLine = Parser.multiLineProcess(textBox1);
-       
-            for (int i = 0; i < multiLine.Count; i++) //DELETE using for loop to keep track of which line is faulty in syntax checking
-            {
 
-                List<string> commandList = multiLine[i].Split(' ').ToList();
+            if (multiLine[0] == "error")
+            {
                 
-                executeLine(commandList);
+            }
+            else
+            {
+                for (int i = 0; i < multiLine.Count; i++)
+                {
+
+                    List<string> commandList = multiLine[i].Split(' ').ToList();
+
+                    executeLine(commandList);
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            List<string> multiLine = Parser.multiLineProcess(textBox1);
+
+            if (multiLine[0] == "error")
+            {
+                int y = 10;
+
+                for (int i = 0; i < multiLine.Count; i++)
+                {
+                    Label label = new Label();
+                    label.Width = 500;
+
+                    label.AutoSize = true;
+                    label.MaximumSize = new System.Drawing.Size(panel1.Width - 20, 0);
+
+                    label.Text = multiLine[i];
+                    label.Location = new Point(10, y);
+                    panel1.Controls.Add(label);
+
+                    y += label.Height + 2;
+                }
             }
         }
     }
