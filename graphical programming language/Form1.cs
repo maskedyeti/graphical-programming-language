@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -153,6 +154,55 @@ namespace graphical_programming_language
                     panel1.Controls.Add(label);
 
                     y += label.Height + 2;
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)//uses openfiledialog to allow selection of files thrpugh file explorer
+        {
+            openFileDialog1.Filter = "Text Files|*.txt|All Files|*.*"; // sets file filters
+            openFileDialog1.Title = "Open Text File"; 
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog1.FileName;
+
+                try
+                {
+                    string fileContents = File.ReadAllText(filePath);
+
+                    // set the text box's text to the contents of the file
+                    textBox1.Text = fileContents;
+
+                    MessageBox.Show("File loaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while loading the file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.Filter = "Text Files|*.txt|All Files|*.*"; // sets file filters
+            saveFileDialog1.Title = "Save Text File";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string savePath = saveFileDialog1.FileName;
+
+                // Get the text from the text box
+                string contentToSave = textBox1.Text;
+
+                try
+                {
+                    File.WriteAllText(savePath, contentToSave);
+                    MessageBox.Show("File saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while saving the file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
