@@ -74,6 +74,11 @@ namespace graphical_programming_language
                 {
                     commands.penColour(Color.FromName(commandList[1]));
                 }
+                else if ((commandList[0] == "reset"))
+                {
+                    panel1.Invalidate();
+                    commands.paintBrush(paintBrushPanel, (panel1.Size.Width / 2),  (panel1.Size.Height / 2));
+                }
                 else if (((commandList[0]) == "fill"))
                 {
 
@@ -147,7 +152,7 @@ namespace graphical_programming_language
                     label.Width = 500;
 
                     label.AutoSize = true;
-                    label.MaximumSize = new System.Drawing.Size(panel1.Width - 20, 0);
+                    label.MaximumSize = new Size(panel1.Width - 20, 0);
 
                     label.Text = multiLine[i];
                     label.Location = new Point(10, y);

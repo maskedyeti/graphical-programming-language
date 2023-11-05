@@ -83,7 +83,7 @@
             // paintBrushPanel
             // 
             this.paintBrushPanel.BackColor = System.Drawing.Color.Red;
-            this.paintBrushPanel.Location = new System.Drawing.Point(454, 262);
+            this.paintBrushPanel.Location = new System.Drawing.Point(458, 270);
             this.paintBrushPanel.Name = "paintBrushPanel";
             this.paintBrushPanel.Size = new System.Drawing.Size(10, 10);
             this.paintBrushPanel.TabIndex = 0;
