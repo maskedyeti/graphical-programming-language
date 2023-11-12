@@ -133,6 +133,21 @@ namespace UnitTests
         }
 
 
+        [TestMethod]
+        public void ProcessSingleLine_InvalidStringInputCommand()
+        {
+            // Arrange
+            string command = "pen invalid";
+
+            // Act
+            List<string> result = Parser.processSingleLine(command);
+
+            // Assert
+            CollectionAssert.AreEqual(new List<string> { "error", "invalid/missing parameter pen requires the selection of a 'red', 'blue', 'black', 'green' or 'purple' parameter" }, result);
+        }
+
+
+
 
     }
 }
