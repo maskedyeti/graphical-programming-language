@@ -34,7 +34,7 @@ namespace graphical_programming_language
 
         }
 
-        private void executeLine(List<string> commandLine)
+        public void executeLine(List<string> commandLine)
         {
             List<string> commandList = commandLine;
 

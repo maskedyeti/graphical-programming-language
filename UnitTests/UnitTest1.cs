@@ -296,6 +296,18 @@ namespace UnitTests
             //Act
             commands.triangle(graphics, coordinates[0], coordinates[1], 5, 5, true);
         }
+
+
+        [TestMethod]
+        public void clear()
+        {
+            // Arrange
+            List<string> test = new List<string> { "clear" };
+            var Form = new Form1();
+
+            //Act
+            Form.executeLine(test);
+        }
     }
 
 
