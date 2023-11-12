@@ -22,6 +22,7 @@ namespace graphical_programming_language
         }
 
         private Boolean fill = false;
+        public List<int> penCoordinates = new List<int> { 10, 10 };
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -45,55 +46,103 @@ namespace graphical_programming_language
             else
             {
                 using (Graphics g = panel1.CreateGraphics())
+
                 {
+
                     if ((commandList[0] == "moveto"))
+
                     {
-                        commands.paintBrush(paintBrushPanel, int.Parse(commandList[1]), int.Parse(commandList[2]));
+
+                        commands.moveTo(penCoordinates, int.Parse(commandList[1]), int.Parse(commandList[2]));
+
                     }
+
                     else if ((commandList[0]) == "rectangle")
+
                     {
-                        commands.rectangle(g, paintBrushPanel.Location.X, paintBrushPanel.Location.Y, int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
+
+                        commands.rectangle(g, penCoordinates[0], penCoordinates[1], int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
+
                     }
+
                     else if ((commandList[0]) == "clear")
+
                     {
+
                         panel1.Invalidate();
+
                     }
+
                     else if ((commandList[0]) == "circle")
+
                     {
-                        commands.circle(g, paintBrushPanel.Location.X, paintBrushPanel.Location.Y, int.Parse(commandList[1]), fill);
+
+                        commands.circle(g, penCoordinates[0], penCoordinates[1], int.Parse(commandList[1]), fill);
+
                     }
+
                     else if (commandList[0] == "triangle")
+
                     {
-                        commands.triangle(g, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
+
+                        commands.triangle(g, penCoordinates[0], penCoordinates[1],
+
                                                             int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
+
                     }
+
                     else if ((commandList[0]) == "drawto")
+
                     {
-                        commands.drawto(g, paintBrushPanel, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
-                                                            int.Parse(commandList[1]), int.Parse(commandList[2]));
+
+                        commands.drawto(g, penCoordinates, int.Parse(commandList[1]), int.Parse(commandList[2]));
+
                     }
+
                     else if ((commandList[0]) == "pen")
+
                     {
+
                         commands.penColour(Color.FromName(commandList[1]));
+
                     }
+
                     else if ((commandList[0] == "reset"))
+
                     {
+
                         panel1.Invalidate();
-                        commands.paintBrush(paintBrushPanel, (panel1.Size.Width / 2), (panel1.Size.Height / 2));
+
+                        commands.moveTo(penCoordinates, 10, 10);
+
                     }
+
                     else if (((commandList[0]) == "fill"))
+
                     {
+
+
 
                         if (commandList[1] == "on")
+
                         {
+
                             fill = true;
 
+
+
                         }
+
                         else if (commandList[1] == "off")
+
                         {
+
                             fill = false;
+
                         }
+
                     }
+                
                 }
             }
         }

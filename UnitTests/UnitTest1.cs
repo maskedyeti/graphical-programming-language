@@ -178,6 +178,24 @@ namespace UnitTests
         }
 
 
+        [TestMethod]
+        public void MoveTo_ShouldChangeCoordinates()
+        {
+            // Arrange
+            List<int> coordinates = new List<int> { 0, 0 };
+            int xCoordinates = 10;
+            int yCoordinates = 20;
+
+            // Act
+            commands.moveTo(coordinates, xCoordinates, yCoordinates);
+
+            // Assert
+            Assert.AreEqual(xCoordinates, coordinates[0]);
+            Assert.AreEqual(yCoordinates, coordinates[1]);
+        }
+
+
+
     }
 
 
