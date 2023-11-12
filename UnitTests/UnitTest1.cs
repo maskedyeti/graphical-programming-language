@@ -147,7 +147,20 @@ namespace UnitTests
         }
 
 
+        //processMultiLine tests
+        [TestMethod]
+        public void MultiLineProcess_ValidInput_ShouldReturnCommandLines()
+        {
+            // Arrange
+            var userInput = new TextBox();
+            userInput.Multiline = true;
+            userInput.Lines = new string[] { "moveto 10 20", "drawto 30 40", "rectangle 50 60" };
+            // Act
+            List<string> result = Parser.multiLineProcess(userInput);
 
+            // Assert
+            CollectionAssert.AreEqual(new List<string> { "moveto 10 20", "drawto 30 40", "rectangle 50 60" }, result);
+        }
 
     }
 }
