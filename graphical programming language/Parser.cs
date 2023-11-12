@@ -127,7 +127,7 @@ namespace graphical_programming_language
                             else
                             {
                                 errorList[0] = "error";
-                                errorList[1] = "invalid/missing parameter" + commandList[0] + " requires the selection of a 'red', 'blue', 'black', 'green' or 'purple' parameter";
+                                errorList[1] = "invalid/missing parameter " + commandList[0] + " requires the selection of a 'red', 'blue', 'black', 'green' or 'purple' parameter";
                             }
                         }
                     }
@@ -160,7 +160,6 @@ namespace graphical_programming_language
             for (int i = 0; i < lines.Length; i++)
             {
                 List<string> lineCommandList = Parser.processSingleLine(lines[i]); //validates singular line
-
                 string lineCommandString = string.Join(" ", lineCommandList);
 
                 if (lineCommandList[0] == "error")
@@ -168,8 +167,11 @@ namespace graphical_programming_language
                     int lineNumber = i + 1;
                     errorList.Add("line " + lineNumber.ToString() + ", " + lineCommandList[1]);
                 }
-
-                commandLines.Add(lineCommandString);
+                else
+                {
+                    commandLines.Add(lineCommandString);
+                }
+                
             }
 
             if (errorList.Count > 1)

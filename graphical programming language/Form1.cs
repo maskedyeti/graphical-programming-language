@@ -17,10 +17,11 @@ namespace graphical_programming_language
         {
             InitializeComponent();
             commands.DrawingManager(); //initialises pen object
+            
+            this.DoubleBuffered = true;
         }
 
         private Boolean fill = false;
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
