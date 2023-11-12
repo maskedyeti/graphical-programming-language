@@ -282,6 +282,20 @@ namespace UnitTests
             //Act
             commands.triangle(graphics, coordinates[0], coordinates[1], 5, 5, false);
         }
+
+
+        [TestMethod]
+        public void DrawTriangle_Fill_Off()
+        {
+            // Arrange
+            commands.DrawingManager();
+            var bitmap = new Bitmap(20, 20);
+            var graphics = Graphics.FromImage(bitmap);
+            var coordinates = new List<int> { 10, 10 };
+
+            //Act
+            commands.triangle(graphics, coordinates[0], coordinates[1], 5, 5, true);
+        }
     }
 
 
