@@ -37,7 +37,32 @@ namespace UnitTests
         }
 
 
+        [TestMethod]
+        public void ProcessSingleLine_InvalidCommand()
+        {
+            // Arrange
+            string command = "invalid command";
+
+            // Act
+            List<string> result = Parser.processSingleLine(command);
+
+            // Assert
+            CollectionAssert.AreEqual(new List<string> { "error", "unrecognised command" }, result);
+        }
+
+        [TestMethod]
+        public void ProcessSingleLine_EmptyCommand()
+        {
+            // Arrange
+            string command = string.Empty;
+
+            // Act
+            List<string> result = Parser.processSingleLine(command);
+
+            // Assert
+            CollectionAssert.AreEqual(new List<string> { "error", "no command" }, result);
+        }
 
 
-}
+    }
 }
