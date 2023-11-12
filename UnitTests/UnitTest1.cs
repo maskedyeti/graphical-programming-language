@@ -4,6 +4,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace UnitTests
@@ -316,9 +317,13 @@ namespace UnitTests
             // Arrange
             List<string> test = new List<string> { "clear" };
             var Form = new Form1();
+            List<int> testCoordinates = new List<int> { 10, 10 };
 
             //Act
             Form.executeLine(test);
+
+            //Assert
+            Assert.AreEqual(Form.penCoordinates[0] == 10, Form.penCoordinates[1] == 10);
         }
 
 
@@ -364,6 +369,21 @@ namespace UnitTests
             // Assert
             Assert.AreEqual(expectedColour, commands.DrawingPen.Color);
             Assert.AreEqual(expectedColour, commands.DrawingBrush.Color);
+        }
+
+
+        [TestMethod]
+        public void Button3_Click_ShouldLoadFileContentsIntoTextBox()
+        {
+            // Arrange
+            var form = new Form1();
+
+            // Act
+
+            form.button3_Click(null, EventArgs.Empty);
+
+            // Assert
+            Assert.AreEqual("test", form.textBox1.Text);
         }
     }
 

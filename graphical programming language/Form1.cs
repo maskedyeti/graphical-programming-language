@@ -17,13 +17,15 @@ namespace graphical_programming_language
         {
             InitializeComponent();
             commands.DrawingManager(); //initialises pen object
-            
-            this.DoubleBuffered = true;
+
         }
 
         public Boolean fill = false;
         public List<int> penCoordinates = new List<int> { 10, 10 };
-        private void textBox1_TextChanged(object sender, EventArgs e)
+
+        public OpenFileDialog OpenFileDialog { get; set; }
+
+        public void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -215,7 +217,7 @@ namespace graphical_programming_language
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)//uses openfiledialog to allow selection of files thrpugh file explorer
+        public void button3_Click(object sender, EventArgs e)//uses openfiledialog to allow selection of files thrpugh file explorer
         {
             openFileDialog1.Filter = "Text Files|*.txt|All Files|*.*"; // sets file filters
             openFileDialog1.Title = "Open Text File"; 
