@@ -200,6 +200,7 @@ namespace UnitTests
         public void DrawTo_ShouldCallMoveTo()
         {
             // Arrange
+            commands.DrawingManager();
             var bitmap = new Bitmap(1, 1);
             var graphics = Graphics.FromImage(bitmap);
             var coordinates = new List<int> { 10, 10 };
@@ -213,6 +214,18 @@ namespace UnitTests
             Assert.AreEqual(newXcoordinates, coordinates[0]);
             Assert.AreEqual(newYcoordinates, coordinates[1]);
 
+        }
+        [TestMethod]
+        public void DrawRectangle_ShouldNotCallDrawRectangle_WhenFillIsTrue()
+        {
+            // Arrange
+            commands.DrawingManager();
+            var bitmap = new Bitmap(20, 20);
+            var graphics = Graphics.FromImage(bitmap);
+            var coordinates = new List<int> { 10, 10 };
+
+            //Act
+            commands.rectangle(graphics, coordinates[0], coordinates[1], 5, 5, false);
         }
 
     }

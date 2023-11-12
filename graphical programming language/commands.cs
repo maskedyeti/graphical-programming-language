@@ -151,7 +151,6 @@ namespace graphical_programming_language
 
         {
 
-            commands.DrawingManager();
             Point originalPoints = new Point(coordinates[0], coordinates[1]);
 
             Point drawtoPoints = new Point(newXcoordinates, newYcoordinates);
