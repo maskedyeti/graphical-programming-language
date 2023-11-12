@@ -320,6 +320,19 @@ namespace UnitTests
             //Act
             Form.executeLine(test);
         }
+
+
+        [TestMethod]
+        public void ExecuteLine_ShouldCallMoveTo_WhenCommandIsMoveto()
+        {
+            // Arrange
+            var form = new Form1();
+            var commandLine = new List<string> { "moveto", "10", "20" };
+
+            // Act
+            form.executeLine(commandLine);
+
+        }
     }
 
 
