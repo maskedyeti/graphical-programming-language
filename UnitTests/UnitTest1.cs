@@ -162,5 +162,25 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "moveto 10 20", "drawto 30 40", "rectangle 50 60" }, result);
         }
 
+        [TestMethod]
+        public void MultiLineProcess_InputWithErrors_ShouldReturnErrorList()
+        {
+            // Arrange
+            var userInput = new TextBox();
+            userInput.Multiline = true;
+            userInput.Lines = new string[] { "moveto 10 20", "invalidCommand", "drawto 30 40" };
+
+            // Act
+            List<string> result = Parser.multiLineProcess(userInput);
+
+            // Assert
+            CollectionAssert.AreEqual(new List<string> { "error", "line 2, unrecognised command" }, result);
+        }
+
+
     }
+
+
+
 }
+
