@@ -21,7 +21,7 @@ namespace graphical_programming_language
             this.DoubleBuffered = true;
         }
 
-        private Boolean fill = false;
+        public Boolean fill = false;
         public List<int> penCoordinates = new List<int> { 10, 10 };
         private void textBox1_TextChanged(object sender, EventArgs e)
         {

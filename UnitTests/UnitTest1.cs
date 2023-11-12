@@ -333,6 +333,22 @@ namespace UnitTests
             form.executeLine(commandLine);
 
         }
+
+
+        [TestMethod]
+        public void Fill_Should_Change_Fill_Variable()
+        {
+            // Arrange
+            var form = new Form1();
+            form.fill = true;
+            var commandLine = new List<string> { "fill off" };
+
+            // Act
+            form.executeLine(commandLine);
+
+            // Assert
+            Assert.IsFalse(form.fill);
+        }
     }
 
 
