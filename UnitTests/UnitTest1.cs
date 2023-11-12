@@ -77,6 +77,48 @@ namespace UnitTests
         }
 
 
-        
+        [TestMethod]
+        public void ProcessSingleLine_InvalidOneIntCommand()
+        {
+            // Arrange
+            string command = "circle invalid";
+
+            // Act
+            List<string> result = Parser.processSingleLine(command);
+
+            // Assert
+            CollectionAssert.AreEqual(new List<string> { "error", "invalid/missing parameter circle requires one integer" }, result);
+        }
+
+
+        [TestMethod]
+        public void ProcessSingleLine_ValidNoInputCommand()
+        {
+            // Arrange
+            string command = "clear";
+
+            // Act
+            List<string> result = Parser.processSingleLine(command);
+
+            // Assert
+            CollectionAssert.AreEqual(new List<string> { "clear" }, result);
+        }
+
+
+        [TestMethod]
+        public void ProcessSingleLine_InvalidNoInputCommand()
+        {
+            // Arrange
+            string command = "clear invalid";
+
+            // Act
+            List<string> result = Parser.processSingleLine(command);
+
+            // Assert
+            CollectionAssert.AreEqual(new List<string> { "error", "unnecerssary parameter, clear does not require a parameter" }, result);
+        }
+
+
+
     }
 }
