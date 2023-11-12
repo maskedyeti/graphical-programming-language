@@ -33,7 +33,7 @@ namespace graphical_programming_language
 
         }
 
-
+        
 
         public static void penColour(Color color)
 
@@ -151,6 +151,7 @@ namespace graphical_programming_language
 
         {
 
+            commands.DrawingManager();
             Point originalPoints = new Point(coordinates[0], coordinates[1]);
 
             Point drawtoPoints = new Point(newXcoordinates, newYcoordinates);
@@ -162,8 +163,8 @@ namespace graphical_programming_language
             moveTo(coordinates, newXcoordinates, newYcoordinates); //moves paintbrush with line 
 
 
-
         }
+
 
     }
 

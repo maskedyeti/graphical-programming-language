@@ -1,7 +1,9 @@
 ﻿using graphical_programming_language;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace UnitTests
@@ -194,7 +196,24 @@ namespace UnitTests
             Assert.AreEqual(yCoordinates, coordinates[1]);
         }
 
+        [TestMethod]
+        public void DrawTo_ShouldCallMoveTo()
+        {
+            // Arrange
+            var bitmap = new Bitmap(1, 1);
+            var graphics = Graphics.FromImage(bitmap);
+            var coordinates = new List<int> { 10, 10 };
+            int newXcoordinates = 30;
+            int newYcoordinates = 40;
 
+            // Act
+            commands.drawto(graphics, coordinates, newXcoordinates, newYcoordinates);
+
+            // Assert
+            Assert.AreEqual(newXcoordinates, coordinates[0]);
+            Assert.AreEqual(newYcoordinates, coordinates[1]);
+
+        }
 
     }
 
