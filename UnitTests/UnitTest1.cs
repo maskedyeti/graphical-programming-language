@@ -119,6 +119,20 @@ namespace UnitTests
         }
 
 
+        [TestMethod]
+        public void ProcessSingleLine_ValidStringInputCommand()
+        {
+            // Arrange
+            string command = "pen red";
+
+            // Act
+            List<string> result = Parser.processSingleLine(command);
+
+            // Assert
+            CollectionAssert.AreEqual(new List<string> { "pen", "red" }, result);
+        }
+
+
 
     }
 }
