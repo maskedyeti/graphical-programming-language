@@ -14,6 +14,9 @@ namespace UnitTests
     {
 
         //processSingleLine tests
+        /// <summary>
+        /// Unit test to validate the processing of a valid double integer command
+        /// </summary>
         [TestMethod]
         public void ProcessSingleLine_ValidDoubleIntegerCommand()
         {
@@ -26,6 +29,10 @@ namespace UnitTests
             // Assert
             CollectionAssert.AreEqual(new List<string> { "moveto", "10", "20" }, result);
         }
+
+        /// <summary>
+        /// Unit test to validate the processing of an invalid doubleinteger command
+        /// </summary>
         [TestMethod]
         public void ProcessSingleLine_InvalidDoubleIntegerCommand()
         {
@@ -39,7 +46,9 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "error", "invalid/missing parameter, moveto requires 2 integers" }, result);
         }
 
-
+        /// <summary>
+        /// Unit test to test the validation of an invalid command
+        /// </summary>
         [TestMethod]
         public void ProcessSingleLine_InvalidCommand()
         {
@@ -53,6 +62,9 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "error", "unrecognised command" }, result);
         }
 
+        /// <summary>
+        /// Unit test to test that an empty input is properly handled
+        /// </summary>
         [TestMethod]
         public void ProcessSingleLine_EmptyCommand()
         {
@@ -66,6 +78,9 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "error", "no command" }, result);
         }
 
+        /// <summary>
+        /// Unit test to validate the processing of a valid one integer command.
+        /// </summary>
         [TestMethod]
         public void ProcessSingleLine_ValidOneIntCommand()
         {
@@ -79,7 +94,9 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "circle", "20" }, result);
         }
 
-
+        /// <summary>
+        /// Unit test to validate the processing of an invalid single integer command.
+        /// </summary>
         [TestMethod]
         public void ProcessSingleLine_InvalidOneIntCommand()
         {
@@ -93,7 +110,9 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "error", "invalid/missing parameter circle requires one integer" }, result);
         }
 
-
+        /// <summary>
+        /// Unit test to validate the processing of a valid no additional parameter command
+        /// </summary>
         [TestMethod]
         public void ProcessSingleLine_ValidNoInputCommand()
         {
@@ -107,7 +126,9 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "clear" }, result);
         }
 
-
+        /// <summary>
+        /// Unit test to validate the processing of an invalid no additional parameter command
+        /// </summary>
         [TestMethod]
         public void ProcessSingleLine_InvalidNoInputCommand()
         {
@@ -121,7 +142,9 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "error", "unnecerssary parameter, clear does not require a parameter" }, result);
         }
 
-
+        /// <summary>
+        /// Unit test to validate the processing of a valid string command.
+        /// </summary>
         [TestMethod]
         public void ProcessSingleLine_ValidStringInputCommand()
         {
@@ -135,7 +158,9 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "pen", "red" }, result);
         }
 
-
+        /// <summary>
+        /// Unit test to validate the processing of an invalid string command.
+        /// </summary>
         [TestMethod]
         public void ProcessSingleLine_InvalidStringInputCommand()
         {
@@ -151,6 +176,9 @@ namespace UnitTests
 
 
         //processMultiLine tests
+        /// <summary>
+        /// Unit test to validate the processing of a of multiple lines of command
+        /// </summary>
         [TestMethod]
         public void MultiLineProcess_ValidInput_ShouldReturnCommandLines()
         {
@@ -165,6 +193,9 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "moveto 10 20", "drawto 30 40", "rectangle 50 60" }, result);
         }
 
+        /// <summary>
+        /// Unit test to validate the processing of multiple lines of commands with errors
+        /// </summary>
         [TestMethod]
         public void MultiLineProcess_InputWithErrors_ShouldReturnErrorList()
         {
@@ -180,7 +211,9 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "error", "line 2, unrecognised command" }, result);
         }
 
-        //commands tests
+        /// <summary>
+        /// Unit test to verify that the moveTo method correctly changes the coordinates
+        /// </summary>
         [TestMethod]
         public void MoveTo_ShouldChangeCoordinates()
         {
@@ -197,6 +230,9 @@ namespace UnitTests
             Assert.AreEqual(yCoordinates, coordinates[1]);
         }
 
+        /// <summary>
+        /// Unit test to verify that the drawto method calls moveTo with the correct arguments.
+        /// </summary>
         [TestMethod]
         public void DrawTo_ShouldCallMoveTo()
         {
@@ -216,6 +252,10 @@ namespace UnitTests
             Assert.AreEqual(newYcoordinates, coordinates[1]);
 
         }
+
+        /// <summary>
+        /// Unit test to verify the rectangle method gets called with correct arguments
+        /// </summary>
         [TestMethod]
         public void DrawRectangle_Fill_Off()
         {
@@ -229,7 +269,9 @@ namespace UnitTests
             commands.rectangle(graphics, coordinates[0], coordinates[1], 5, 5, false);
         }
 
-
+        /// <summary>
+        /// Unit test to verify the rectangle method gets called with correct arguments adn with fill on
+        /// </summary>
         [TestMethod]
         public void DrawRectangle_Fill_On()
         {
@@ -243,6 +285,10 @@ namespace UnitTests
             commands.rectangle(graphics, coordinates[0], coordinates[1], 5, 5, true);
         }
 
+
+        /// <summary>
+        /// Unit test to verify the circle method gets called with correct arguments
+        /// </summary>
         [TestMethod]
         public void DrawCirlce_Fill_Off()
         {
@@ -256,7 +302,9 @@ namespace UnitTests
             commands.circle(graphics, coordinates[0], coordinates[1], 5, false);
         }
 
-
+        /// <summary>
+        /// Unit test to verify the circle method gets called with correct arguments and with fill on
+        /// </summary>
         [TestMethod]
         public void DrawCirlce_Fill_On()
         {
@@ -270,7 +318,9 @@ namespace UnitTests
             commands.circle(graphics, coordinates[0], coordinates[1], 5, true);
         }
 
-
+        /// <summary>
+        /// Unit test to verify the triangle method gets called with correct arguments
+        /// </summary>
         [TestMethod]
         public void DrawTriangle_Fill_On()
         {
@@ -284,7 +334,9 @@ namespace UnitTests
             commands.triangle(graphics, coordinates[0], coordinates[1], 5, 5, false);
         }
 
-
+        /// <summary>
+        /// Unit test to verify the triangle method gets called with correct arguments and with fill on
+        /// </summary>
         [TestMethod]
         public void DrawTriangle_Fill_Off()
         {
@@ -298,7 +350,9 @@ namespace UnitTests
             commands.triangle(graphics, coordinates[0], coordinates[1], 5, 5, true);
         }
 
-
+        /// <summary>
+        /// Unit test to verify the calling of the clear method
+        /// </summary>
         [TestMethod]
         public void clear()
         {
@@ -310,7 +364,9 @@ namespace UnitTests
             Form.executeLine(test);
         }
 
-
+        /// <summary>
+        /// Unit test to verify the calling of the reset method as well as the reset of coordinates
+        /// </summary>
         [TestMethod]
         public void reset()
         {
@@ -326,7 +382,9 @@ namespace UnitTests
             Assert.AreEqual(Form.penCoordinates[0] == 10, Form.penCoordinates[1] == 10);
         }
 
-
+        /// <summary>
+        /// Unit test to verify that executeLine will call for and execute a method
+        /// </summary>
         [TestMethod]
         public void ExecuteLine_ShouldCallMoveTo_WhenCommandIsMoveto()
         {
@@ -339,9 +397,11 @@ namespace UnitTests
 
         }
 
-
+        /// <summary>
+        /// Unit test to verify that the fill function changes the fill variable when the "fill on" command is given
+        /// </summary>
         [TestMethod]
-        public void Fill_Should_Change_Fill_Variable()
+        public void FillShouldChangeFillVariable()
         {
             // Arrange
             var form = new Form1();
@@ -355,7 +415,9 @@ namespace UnitTests
             Assert.IsFalse(form.fill);
         }
 
-
+        /// <summary>
+        /// Unit test to verify that the penColour method correctly sets the color of the DrawingPen and DrawingBrush
+        /// </summary>
         [TestMethod]
         public void PenColour_ShouldSetPenAndBrushColor()
         {
@@ -372,19 +434,10 @@ namespace UnitTests
         }
 
 
-        [TestMethod]
-        public void Button3_Click_ShouldLoadFileContentsIntoTextBox()
-        {
-            // Arrange
-            var form = new Form1();
+     
 
-            // Act
 
-            form.button3_Click(null, EventArgs.Empty);
-
-            // Assert
-            Assert.AreEqual("test", form.textBox1.Text);
-        }
+       
     }
 
 

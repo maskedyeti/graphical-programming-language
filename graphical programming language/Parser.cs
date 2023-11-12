@@ -11,7 +11,9 @@ using System.Windows.Input;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace graphical_programming_language
-{
+    ///<summary>
+    ///provides parsing and validation handling for the program
+    ///</summary>
     public class Parser //handles input processing and input validation
     {
         static List<string> validCommands = new List<string> { "moveto", "drawto", "clear", "reset", "rectangle"
@@ -25,11 +27,20 @@ namespace graphical_programming_language
 
         static List<string> validColour = new List<string> { "red", "blue", "black", "green", "purple" };
 
-        public static List<string> processSingleLine(String command)//method to split inputted line of command into a list and validate it
+    /// <summary>
+    /// Splits an inputted line of command into a list and validates it
+    /// </summary>
+    /// <param name="command">The inputted line of command</param>
+    /// <returns>
+    /// If the command is valid, returns a list of strings representing the command and its parameters
+    /// If the command is invalid, returns a list with the first element set to "error" and the second element containing an error message
+    /// </returns>
+    public static List<string> processSingleLine(String command)//method to split inputted line of command into a list and validate it
         {
             List<string> errorList = new List<string> {"empty", "empty"};
 
             bool commandEmpty = string.IsNullOrWhiteSpace(command);//checks if the their is a command present
+            command.ToLower();
 
             if (commandEmpty == true) 
             {
@@ -150,8 +161,15 @@ namespace graphical_programming_language
             }
             return errorList;
         }
-
-        public static List<string> multiLineProcess(System.Windows.Forms.TextBox userInput) //breaks down each line into a list element after validating
+    /// <summary>
+    /// Breaks down each line of the input TextBox into a list of validated command lines
+    /// </summary>
+    /// <param name="userInput">The TextBox containing the commands</param>
+    /// <returns>
+    /// If there are validation errors, returns an errors list with the first element set to "error"
+    /// If all lines are valid, returns a list of the validated command lines.
+    /// </returns>
+    public static List<string> multiLineProcess(System.Windows.Forms.TextBox userInput) //breaks down each line into a list element after validating
         {
             List<string> commandLines = new List<string> (); //stores singular lines of command after validation
             List<string> errorList = new List<string> {"error"};
