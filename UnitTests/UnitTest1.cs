@@ -179,7 +179,7 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "error", "line 2, unrecognised command" }, result);
         }
 
-
+        //commands tests
         [TestMethod]
         public void MoveTo_ShouldChangeCoordinates()
         {
@@ -216,7 +216,7 @@ namespace UnitTests
 
         }
         [TestMethod]
-        public void DrawRectangle_ShouldNotCallDrawRectangle_WhenFillIsTrue()
+        public void DrawRectangle_Fill_Off()
         {
             // Arrange
             commands.DrawingManager();
@@ -228,9 +228,24 @@ namespace UnitTests
             commands.rectangle(graphics, coordinates[0], coordinates[1], 5, 5, false);
         }
 
+
+        [TestMethod]
+        public void DrawRectangle_Fill_On()
+        {
+            // Arrange
+            commands.DrawingManager();
+            var bitmap = new Bitmap(20, 20);
+            var graphics = Graphics.FromImage(bitmap);
+            var coordinates = new List<int> { 10, 10 };
+
+            //Act
+            commands.rectangle(graphics, coordinates[0], coordinates[1], 5, 5, true);
+        }
     }
 
 
 
+
 }
+
 
