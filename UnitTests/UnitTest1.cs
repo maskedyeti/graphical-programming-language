@@ -23,7 +23,21 @@ namespace UnitTests
             // Assert
             CollectionAssert.AreEqual(new List<string> { "moveto", "10", "20" }, result);
         }
+        [TestMethod]
+        public void ProcessSingleLine_InvalidDoubleIntegerCommand()
+        {
+            // Arrange
+            string command = "moveto invalidParameter";
+
+            // Act
+            List<string> result = Parser.processSingleLine(command);
+
+            // Assert
+            CollectionAssert.AreEqual(new List<string> { "error", "invalid/missing parameter, moveto requires 2 integers" }, result);
+        }
 
 
-    }
+
+
+}
 }
