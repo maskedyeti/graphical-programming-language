@@ -29,75 +29,62 @@ namespace graphical_programming_language
             DrawingBrush.Color = color;
         }
 
-        public static void rectangle(Panel panel, int xCoordinates, int yCoordinates, int height, int width, Boolean fill)
+        public static void rectangle(Graphics g, int xCoordinates, int yCoordinates, int height, int width, bool fill)
         {
-            using (Graphics g = panel.CreateGraphics())
+            if (fill == false) //draws outline
             {
-                if (fill == false) //draws outline
-                {
-                    g.DrawRectangle(commands.DrawingPen, xCoordinates, yCoordinates, height, width);
-                }
-                else //draws filled out shape
-                {
-                    g.FillRectangle(commands.DrawingBrush, xCoordinates, yCoordinates, height, width);
-                }
+                g.DrawRectangle(DrawingPen, xCoordinates, yCoordinates, height, width);
+            }
+            else //draws filled out shape
+            {
+                g.FillRectangle(DrawingBrush, xCoordinates, yCoordinates, height, width);
             }
         }
 
-        public static void paintBrush(Panel panel, int xCoordinates, int yCoordinates) //change location of "paintbrush" panel
+            public static void paintBrush(Panel panel, int xCoordinates, int yCoordinates) //change location of "paintbrush" panel
         {
             panel.Location = new Point(xCoordinates, yCoordinates);
             
         }
 
-        public static void circle (Panel panel, int xCoordinates, int yCoordinates, int radius, Boolean fill)
+        public static void circle (Graphics g, int xCoordinates, int yCoordinates, int radius, Boolean fill)
         {
-            using (Graphics g = panel.CreateGraphics())
+            if (fill == false)
             {
-                if (fill == false)
-                {
-                    g.DrawEllipse(commands.DrawingPen, xCoordinates - radius / 2, yCoordinates - radius / 2, radius, radius); // /2 centers the rectangle made as the base of the circle around the paintbrush
-                }
-                else
-                {
-                    g.FillEllipse(commands.DrawingBrush, xCoordinates - radius / 2, yCoordinates - radius / 2, radius, radius);
-                }
+                g.DrawEllipse(commands.DrawingPen, xCoordinates - radius / 2, yCoordinates - radius / 2, radius, radius); // /2 centers the rectangle made as the base of the circle around the paintbrush
+            }
+            else
+            {
+                g.FillEllipse(commands.DrawingBrush, xCoordinates - radius / 2, yCoordinates - radius / 2, radius, radius);
             }
         }
 
-        public static void triangle(Panel panel, int xCoordinates, int yCoordinates, int width, int height, Boolean fill)
+        public static void triangle(Graphics g, int xCoordinates, int yCoordinates, int width, int height, Boolean fill)
         {
-            using (Graphics g = panel.CreateGraphics())
+            Point[] trianglePoints = new Point[]
             {
-                Point[] trianglePoints = new Point[]
-                {
-                    new Point(xCoordinates, yCoordinates - height), // Top point
-                    new Point(xCoordinates, yCoordinates), // Bottom-left point
-                    new Point(xCoordinates + width, yCoordinates)  // Bottom-right point
-                };
+                new Point(xCoordinates, yCoordinates - height), // Top point
+                new Point(xCoordinates, yCoordinates), // Bottom-left point
+                new Point(xCoordinates + width, yCoordinates)  // Bottom-right point
+            };
           
-                if (fill == false)
-                {
-                    g.DrawPolygon(commands.DrawingPen, trianglePoints);
-                }
-                else
-                {
-                    g.FillPolygon(commands.DrawingBrush, trianglePoints);
-                }
-               
-            }
-        }
-        public static void drawto(Panel panel, Panel paintbrush, int xCoordinates, int yCoordinates, int newXcoordinates, int newYcoordinates)
-        {
-            using (Graphics g = panel.CreateGraphics())
+            if (fill == false)
             {
-
-                Point originalPoints = new Point(xCoordinates, yCoordinates);
-                Point drawtoPoints = new Point(newXcoordinates, newYcoordinates);
-
-                g.DrawLine(commands.DrawingPen, originalPoints, drawtoPoints);
-                paintBrush(paintbrush, newXcoordinates, newYcoordinates); //moves paintbrush with line
+                g.DrawPolygon(commands.DrawingPen, trianglePoints);
             }
+            else
+            {
+                g.FillPolygon(commands.DrawingBrush, trianglePoints);
+            }  
+        }
+        public static void drawto(Graphics g, Panel paintbrush, int xCoordinates, int yCoordinates, int newXcoordinates, int newYcoordinates)
+        {
+            Point originalPoints = new Point(xCoordinates, yCoordinates);
+            Point drawtoPoints = new Point(newXcoordinates, newYcoordinates);
+
+            g.DrawLine(commands.DrawingPen, originalPoints, drawtoPoints);
+            paintBrush(paintbrush, newXcoordinates, newYcoordinates); //moves paintbrush with line
+            
         }
     }
 }

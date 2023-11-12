@@ -44,53 +44,55 @@ namespace graphical_programming_language
             }
             else
             {
-                if ((commandList[0] == "moveto"))
+                using (Graphics g = panel1.CreateGraphics())
                 {
-                    commands.paintBrush(paintBrushPanel, int.Parse(commandList[1]), int.Parse(commandList[2]));
-                }
-                else if ((commandList[0]) == "rectangle")
-                {
-                    commands.rectangle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
-                                                        int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
-                }
-                else if ((commandList[0]) == "clear")
-                {
-                    panel1.Invalidate();
-                }
-                else if ((commandList[0]) == "circle")
-                {
-                    commands.circle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y, int.Parse(commandList[1]), fill);
-                }
-                else if (commandList[0] == "triangle")
-                {
-                    commands.triangle(panel1, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
-                                                        int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
-                }
-                else if ((commandList[0]) == "drawto")
-                {
-                    commands.drawto(panel1, paintBrushPanel, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
-                                                        int.Parse(commandList[1]), int.Parse(commandList[2]));
-                }
-                else if ((commandList[0]) == "pen")
-                {
-                    commands.penColour(Color.FromName(commandList[1]));
-                }
-                else if ((commandList[0] == "reset"))
-                {
-                    panel1.Invalidate();
-                    commands.paintBrush(paintBrushPanel, (panel1.Size.Width / 2),  (panel1.Size.Height / 2));
-                }
-                else if (((commandList[0]) == "fill"))
-                {
-
-                    if (commandList[1] == "on")
+                    if ((commandList[0] == "moveto"))
                     {
-                        fill = true;
-
+                        commands.paintBrush(paintBrushPanel, int.Parse(commandList[1]), int.Parse(commandList[2]));
                     }
-                    else if (commandList[1] == "off")
+                    else if ((commandList[0]) == "rectangle")
                     {
-                        fill = false;
+                        commands.rectangle(g, paintBrushPanel.Location.X, paintBrushPanel.Location.Y, int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
+                    }
+                    else if ((commandList[0]) == "clear")
+                    {
+                        panel1.Invalidate();
+                    }
+                    else if ((commandList[0]) == "circle")
+                    {
+                        commands.circle(g, paintBrushPanel.Location.X, paintBrushPanel.Location.Y, int.Parse(commandList[1]), fill);
+                    }
+                    else if (commandList[0] == "triangle")
+                    {
+                        commands.triangle(g, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
+                                                            int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
+                    }
+                    else if ((commandList[0]) == "drawto")
+                    {
+                        commands.drawto(g, paintBrushPanel, paintBrushPanel.Location.X, paintBrushPanel.Location.Y,
+                                                            int.Parse(commandList[1]), int.Parse(commandList[2]));
+                    }
+                    else if ((commandList[0]) == "pen")
+                    {
+                        commands.penColour(Color.FromName(commandList[1]));
+                    }
+                    else if ((commandList[0] == "reset"))
+                    {
+                        panel1.Invalidate();
+                        commands.paintBrush(paintBrushPanel, (panel1.Size.Width / 2), (panel1.Size.Height / 2));
+                    }
+                    else if (((commandList[0]) == "fill"))
+                    {
+
+                        if (commandList[1] == "on")
+                        {
+                            fill = true;
+
+                        }
+                        else if (commandList[1] == "off")
+                        {
+                            fill = false;
+                        }
                     }
                 }
             }
