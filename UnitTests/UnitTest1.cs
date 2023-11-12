@@ -308,6 +308,18 @@ namespace UnitTests
             //Act
             Form.executeLine(test);
         }
+
+
+        [TestMethod]
+        public void reset()
+        {
+            // Arrange
+            List<string> test = new List<string> { "clear" };
+            var Form = new Form1();
+
+            //Act
+            Form.executeLine(test);
+        }
     }
 
 
