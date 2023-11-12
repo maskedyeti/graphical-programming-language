@@ -340,14 +340,30 @@ namespace UnitTests
         {
             // Arrange
             var form = new Form1();
-            form.fill = true;
-            var commandLine = new List<string> { "fill off" };
+            form.fill = false;
+            var commandLine = new List<string> { "fill on" };
 
             // Act
             form.executeLine(commandLine);
 
             // Assert
             Assert.IsFalse(form.fill);
+        }
+
+
+        [TestMethod]
+        public void PenColour_ShouldSetPenAndBrushColor()
+        {
+            // Arrange
+            commands.DrawingManager();
+            Color expectedColour = Color.Red;
+
+            // Act
+            commands.penColour(expectedColour);
+
+            // Assert
+            Assert.AreEqual(expectedColour, commands.DrawingPen.Color);
+            Assert.AreEqual(expectedColour, commands.DrawingBrush.Color);
         }
     }
 
