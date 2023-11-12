@@ -63,6 +63,20 @@ namespace UnitTests
             CollectionAssert.AreEqual(new List<string> { "error", "no command" }, result);
         }
 
+        [TestMethod]
+        public void ProcessSingleLine_ValidOneIntCommand()
+        {
+            // Arrange
+            string command = "circle 20";
 
+            // Act
+            List<string> result = Parser.processSingleLine(command);
+
+            // Assert
+            CollectionAssert.AreEqual(new List<string> { "circle", "20" }, result);
+        }
+
+
+        
     }
 }
