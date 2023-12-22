@@ -23,6 +23,8 @@ namespace graphical_programming_language
         public Boolean fill = false;
         public List<int> penCoordinates = new List<int> { 10, 10 };
 
+        public OpenFileDialog OpenFileDialog { get; set; }
+
         public void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -34,10 +36,6 @@ namespace graphical_programming_language
 
         }
 
-        /// <summary>
-        /// Executes a list of commands for drawing on a panel
-        /// </summary>
-        /// <param name="commandLine">List of commands to execute</param>
         public void executeLine(List<string> commandLine)
         {
             List<string> commandList = commandLine;
@@ -150,13 +148,6 @@ namespace graphical_programming_language
                 }
             }
         }
-
-        /// <summary>
-        /// Handles the KeyDown event for the second text box
-        /// Checks for the Enter key and processes the entered command
-        /// </summary>
-        /// <param name="sender">the event</param>
-        /// <param name="e">A KeyEventArgs that contains event data</param>
         private void textBox2_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) 
@@ -180,12 +171,7 @@ namespace graphical_programming_language
 
         }
 
-        /// <summary>
-        /// Handles the Click event for the first button
-        /// Processes multiple lines of commands from textBox1
-        /// </summary>
-        /// <param name="sender">event source</param>
-        /// <param name="e">An EventArgs that contains the event data.</param>
+
         private void button1_Click(object sender, EventArgs e)
         {
             List<string> multiLine = Parser.multiLineProcess(textBox1);
@@ -206,11 +192,6 @@ namespace graphical_programming_language
             }
         }
 
-        /// <summary>
-        /// Handles the Click event for the second button.
-        /// Processes multiple commands from textBox1, syntax checks them and displays any errors as labels on panel1
-        /// </summary>
-        /// <param name="sender">The event source</param>
         private void button2_Click(object sender, EventArgs e)
         {
             List<string> multiLine = Parser.multiLineProcess(textBox1);
@@ -236,15 +217,6 @@ namespace graphical_programming_language
             }
         }
 
-        /// <summary>
-        /// Handles the Click event for the third button
-        /// Uses an OpenFileDialog to allow the selection of files through file explorer
-        /// Reads the contents of the selected file and sets the text box's text to the file contents
-        /// Displays a success message if the file is loaded successfully, otherwise, shows an error message
-        /// </summary>
-        /// <param name="sender">The event source.</param>
-        /// <param name="e">contains the event data.</param>
-        public void button3_Click(object sender, EventArgs e)
         public void button3_Click(object sender, EventArgs e)//uses openfiledialog to allow selection of files thrpugh file explorer
         {
             openFileDialog1.Filter = "Text Files|*.txt|All Files|*.*"; // sets file filters
@@ -270,13 +242,6 @@ namespace graphical_programming_language
             }
         }
 
-        /// <summary>
-        /// Handles the Click event for the fourth button
-        /// Uses a SaveFileDialog to specify the file path and saves the contents of the text box to the selected file
-        /// Displays a success message if the file is saved successfully; otherwise, shows an error message
-        /// </summary>
-        /// <param name="sender">source of the event</param>
-        /// <param name="e">contains the event data.</param>
         private void button4_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Filter = "Text Files|*.txt|All Files|*.*"; // sets file filters

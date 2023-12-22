@@ -9,10 +9,6 @@ using System.Windows.Forms;
 
 namespace graphical_programming_language
 {
-
-    ///<summary>
-    ///commands class holds all of the relevant drawing and opperational commands for the program
-    ///</summary>
     public class commands
 
 
@@ -24,9 +20,7 @@ namespace graphical_programming_language
         public static SolidBrush DrawingBrush { get; private set; }
 
 
-        ///<summary>
-        ///initialises the pen the rbush and sets the colour as black
-        ///</summary>
+
         public static void DrawingManager()
 
         {
@@ -39,11 +33,8 @@ namespace graphical_programming_language
 
         }
 
+        
 
-        ///<summary>
-        ///sets the colour of the brush and the pen
-        ///</summary>
-        ///<param name='color'> the users inputted colour </param>
         public static void penColour(Color color)
 
         {
@@ -57,14 +48,7 @@ namespace graphical_programming_language
         }
 
 
-        ///<summary> 
-        ///draws a rectangle based on the pen coordinates and on the uers inpute
-        ///</summary>
-        ///<param name='g'> the graphics components</param>
-        ///<param name='xCoordinates'> the x coordinates of the pen</param>
-        ///<param name='yCoordinates'> the y coordinates of the pen</param>
-        ///<param name='hieght'> the height of the rectangle</param>
-        ///<param name='width'> the width of the rectangle</param>
+
         public static void rectangle(Graphics g, int xCoordinates, int yCoordinates, int height, int width, bool fill)
 
         {
@@ -88,12 +72,7 @@ namespace graphical_programming_language
         }
 
 
-        /// <summary>
-        /// Moves the pen to the specified coordinates.
-        /// </summary>
-        /// <param name="coordinates">The list containing the current coordinates of the pen</param>
-        /// <param name="xCoordinates">The new X-coordinate for the pen</param>
-        /// <param name="yCoordinates">The new Y-coordinate for the pen</param>
+
         public static void moveTo(List<int> coordinates, int xCoordinates, int yCoordinates) //change location of "paintbrush" panel 
 
         {
@@ -107,14 +86,7 @@ namespace graphical_programming_language
         }
 
 
-        /// <summary>
-        /// Draws a circle to the specified size
-        /// </summary>
-        /// <param name="g">The graphics object on which to draw the circle.</param>
-        /// <param name="xCoordinates">The X coordinate of the center of the circle</param>
-        /// <param name="yCoordinates">The Y coordinate of the center of the circle</param>
-        /// <param name="radius">The radius of the circle.</param>
-        /// <param name="fill">A value indicating whether to fill the circle (true) or draw only the outline (false)</param>
+
         public static void circle(Graphics g, int xCoordinates, int yCoordinates, int radius, Boolean fill)
 
         {
@@ -138,15 +110,7 @@ namespace graphical_programming_language
         }
 
 
-        /// <summary>
-        /// Draws a triangle
-        /// </summary>
-        /// <param name="g">The graphics object on which to draw the triangle</param>
-        /// <param name="xCoordinates">The X coordinate of the top and bottom-left points of the triangle</param>
-        /// <param name="yCoordinates">The Y coordinate of the top and bottom-left points of the triangle</param>
-        /// <param name="width">The width of the triangle's base</param>
-        /// <param name="height">The height of the triangle</param>
-        /// <param name="fill">A value indicating whether to fill the triangle (true) or draw only the outline (false).</param>
+
         public static void triangle(Graphics g, int xCoordinates, int yCoordinates, int width, int height, Boolean fill)
 
         {
@@ -183,13 +147,6 @@ namespace graphical_programming_language
 
         }
 
-        /// <summary>
-        /// Draws a line from the current position to a new position 
-        /// </summary>
-        /// <param name="g">The Graphics object on which to draw the lin.</param>
-        /// <param name="coordinates">The current position coordinates as a list [X, Y]</param>
-        /// <param name="newXcoordinates">The X coordinate of the new position</param>
-        /// <param name="newYcoordinates">The Y coordinate of the new position</param>
         public static void drawto(Graphics g, List<int> coordinates, int newXcoordinates, int newYcoordinates)
 
         {
