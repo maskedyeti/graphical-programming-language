@@ -52,24 +52,39 @@ namespace graphical_programming_language
                 
                     if (twoIntCommands.Contains(commandList[0])) //two integer command and parameter validation
                     {
-                  
+
                         if (commandList.Count == 3)
                         {
-               
+
                             if (int.TryParse(commandList[1], out _) == true) //checks if both additional parameters are numbers
                             {
+
                                 if (int.TryParse(commandList[2], out _) == true)
                                 {
-        
+
                                 }
                                 else
                                 {
                                     errorList[0] = "error";
-                                    errorList[1] = "invalid/missing parameter, " + commandList[0] +" requires 2 integers";
+                                    errorList[1] = "invalid/missing parameter, " + commandList[0] + " requires 2 integers";
                                 }
+
+                            }
+                            else if (variables.ContainsKey(commandList[1]) && int.TryParse(commandList[2], out _))
+                            {
+                                commandList[1] = variables[commandList[1]].ToString();
+                            }
+                            else if (variables.ContainsKey(commandList[2]) && int.TryParse(commandList[1], out _))
+                            {
+                                commandList[2] = variables[commandList[2]].ToString();
+                            }
+                            else if (variables.ContainsKey(commandList[2]) && variables.ContainsKey(commandList[1]))
+                            {
+                                commandList[2] = variables[commandList[2]].ToString();
+                                commandList[1] = variables[commandList[1]].ToString();
                             }
                         }
-                        else 
+                        else
                         {
                             errorList[0] = "error";
                             errorList[1] = "invalid/missing parameter, " + commandList[0] + " requires 2 integers";
@@ -94,6 +109,9 @@ namespace graphical_programming_language
                         {
                             if (int.TryParse(commandList[1], out _))
                             {
+                            } else if (variables.ContainsKey(commandList[1]))
+                            {
+                                commandList[1] = variables[commandList[1]].ToString();
                             }
                             else
                             {
