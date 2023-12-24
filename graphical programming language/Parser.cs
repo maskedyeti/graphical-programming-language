@@ -16,7 +16,8 @@ namespace graphical_programming_language
     public class Parser //handles input processing and input validation
     {
         public static Dictionary<string, int> variables = new Dictionary<string, int>();
-        IVariableFactory variableFactory = new VariableFactory();
+        VariableFactory variableFactory = new VariableFactory();
+        
 
         static List<string> validCommands = new List<string> { "moveto", "drawto", "clear", "reset", "rectangle"
                                                         , "circle", "triangle", "pen", "fill"};
@@ -26,12 +27,13 @@ namespace graphical_programming_language
         static List<string> noInputCommands = new List<string> {"clear", "reset", "run"};
         static List<string> oneIntCommands = new List<string> { "circle" };
         static List<string> stringCommands = new List<string> { "pen", "fill"};
-
+        static List<string> operations = new List<string> {"-", "+", "*"};
         static List<string> validColour = new List<string> { "red", "blue", "black", "green", "purple" };
   
         public static List<string> processSingleLine(String command)//method to split inputted line of command into a list and validate it
         {
             List<string> errorList = new List<string> {"empty", "empty"};
+            Parser parser = new Parser();
 
             bool commandEmpty = string.IsNullOrWhiteSpace(command);//checks if the their is a command present
 
@@ -136,20 +138,37 @@ namespace graphical_programming_language
                         }
                     }
 
-                }
-
-                else if(commandList.Count() == 3 && commandList[1] == "=")
+                }else if(commandList.Count() == 3 && commandList[1] == "=")
                 {
                     if (int.TryParse(commandList[2], out int value))
                     {
-
-                        Parser parser = new Parser();
+                        
                         Variable a = parser.variableFactory.CreateVariable(commandList[0], value);
-
                         variables[a.Name] = a.Value;
 
                     }
                     
+                }else if(commandList.Count() == 5 && commandList[1] == "=" && operations.Contains(commandList[3]))
+                {
+
+                    if (int.TryParse(commandList[2], out int operand1) && int.TryParse(commandList[4], out int operand2))
+                    {
+
+                        Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1, operand2, commandList[3]);
+                        variables[a.Name] = a.Value;
+
+                    }else if (variables.ContainsKey(commandList[2]) && int.TryParse(commandList[4], out int operand2a))
+                    {
+                        Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, variables[commandList[2]], operand2a, commandList[3]);
+                        variables[a.Name] = a.Value;
+                       
+                    }
+                    else if (variables.ContainsKey(commandList[4]) && int.TryParse(commandList[2], out int operand1a))
+                    {
+                        Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1a, variables[commandList[4]], commandList[3]);
+                        variables[a.Name] = a.Value;
+                    }
+
                 }
                 else
                 {
