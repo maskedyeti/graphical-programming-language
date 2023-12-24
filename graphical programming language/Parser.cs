@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +15,9 @@ namespace graphical_programming_language
 {
     public class Parser //handles input processing and input validation
     {
+        public static Dictionary<string, int> variables = new Dictionary<string, int>();
+        IVariableFactory variableFactory = new VariableFactory();
+
         static List<string> validCommands = new List<string> { "moveto", "drawto", "clear", "reset", "rectangle"
                                                         , "circle", "triangle", "pen", "fill"};
 
@@ -24,7 +28,7 @@ namespace graphical_programming_language
         static List<string> stringCommands = new List<string> { "pen", "fill"};
 
         static List<string> validColour = new List<string> { "red", "blue", "black", "green", "purple" };
-
+  
         public static List<string> processSingleLine(String command)//method to split inputted line of command into a list and validate it
         {
             List<string> errorList = new List<string> {"empty", "empty"};
@@ -132,6 +136,20 @@ namespace graphical_programming_language
                         }
                     }
 
+                }
+
+                else if(commandList.Count() == 3 && commandList[1] == "=")
+                {
+                    if (int.TryParse(commandList[2], out int value))
+                    {
+
+                        Parser parser = new Parser();
+                        Variable a = parser.variableFactory.CreateVariable(commandList[0], value);
+
+                        variables[a.Name] = a.Value;
+
+                    }
+                    
                 }
                 else
                 {
