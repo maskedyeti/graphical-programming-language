@@ -175,6 +175,7 @@ namespace graphical_programming_language
         private void button1_Click(object sender, EventArgs e)
         {
             List<string> multiLine = Parser.multiLineProcess(textBox1);
+            bool ifAchieved = true;
 
             if (multiLine[0] == "error")
             {
@@ -187,7 +188,20 @@ namespace graphical_programming_language
 
                     List<string> commandList = multiLine[i].Split(' ').ToList();
 
-                    executeLine(commandList);
+                    if (commandList[0] == "if")
+                    {
+                        ifAchieved = commands.ifstatment(commandList);
+                    }
+
+                    if (commandList[0] == "endif")
+                    {
+                        ifAchieved = true;
+                    }
+
+                    if (ifAchieved == true)
+                    {
+                        executeLine(commandList);
+                    }
                 }
             }
         }

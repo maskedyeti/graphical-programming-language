@@ -164,7 +164,62 @@ namespace graphical_programming_language
 
         }
 
+        public static bool ifstatment(List<string> statment)
+        {
 
+            if (int.TryParse(statment[1], out int firstNum) && int.TryParse(statment[3], out int secondNum)) //checks if 2 numbers are equal
+            {
+                if (firstNum == secondNum)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            else if (int.TryParse(statment[1], out int number)) //checks if a variable and a number are equal
+            {
+                if (number == Parser.variables[statment[3]])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            else if (int.TryParse(statment[3], out int number2))
+            {
+                if (number2 == Parser.variables[statment[1]])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            else if (Parser.variables.ContainsKey(statment[1]) && Parser.variables.ContainsKey(statment[3])) //checks if 2 variables are equal
+            {
+                if (Parser.variables[statment[1]] == Parser.variables[statment[3]])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            else
+            {
+                return false;
+            }
+        }
     }
 
 }

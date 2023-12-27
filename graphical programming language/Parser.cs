@@ -20,13 +20,13 @@ namespace graphical_programming_language
         
 
         static List<string> validCommands = new List<string> { "moveto", "drawto", "clear", "reset", "rectangle"
-                                                        , "circle", "triangle", "pen", "fill"};
+                                                        , "circle", "triangle", "pen", "fill", "if", "endif"};
 
         //contains commands and their requiredparameters for input validation
         static List<string> twoIntCommands = new List<string> {"moveto", "drawto", "rectangle", "triangle"}; 
         static List<string> noInputCommands = new List<string> {"clear", "reset", "run"};
         static List<string> oneIntCommands = new List<string> { "circle" };
-        static List<string> stringCommands = new List<string> { "pen", "fill"};
+        static List<string> stringCommands = new List<string> { "pen", "fill", "if"};
         static List<string> operations = new List<string> {"-", "+", "*"};
         static List<string> validColour = new List<string> { "red", "blue", "black", "green", "purple" };
   
@@ -154,6 +154,16 @@ namespace graphical_programming_language
                                 errorList[1] = "invalid/missing parameter " + commandList[0] + " requires the selection of a 'red', 'blue', 'black', 'green' or 'purple' parameter";
                             }
                         }
+
+                        if (commandList[0] == "if")
+                        {
+                            if (commandList[2] != "=")
+                            {
+                                errorList[0] = "error";
+                                errorList[1] = "improper syntax, if statment requires '=' as the third entry";
+                            }
+                        }
+
                     }
 
                 }else if(commandList.Count() == 3 && commandList[1] == "=")
@@ -216,6 +226,11 @@ namespace graphical_programming_language
             {
                 List<string> lineCommandList = Parser.processSingleLine(lines[i]); //validates singular line
                 string lineCommandString = string.Join(" ", lineCommandList);
+
+                if (lineCommandList[0] == "if")
+                {
+                    commands.ifstatment(lineCommandList);
+                }
 
                 if (lineCommandList[0] == "error")
                 {
