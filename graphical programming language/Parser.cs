@@ -187,6 +187,30 @@ namespace graphical_programming_language
                         variables[a.Name] = a.Value;
                     }
 
+                }else if (commandList[0] == "if")
+                {
+                    if (commandList[2] == "=" || commandList[2] == ">" || commandList[2] == "<")
+                    {
+                        if (int.TryParse(commandList[1], out _) || variables.ContainsKey(commandList[1]))
+                        {
+                        }
+                        else
+                        {
+                            errorList[0] = "error";
+                            errorList[1] = "error first parameter for if statment is invalid";
+                        }
+
+                        if (int.TryParse(commandList[3], out _) || variables.ContainsKey(commandList[3]))
+                        {
+                            errorList[0] = "error";
+                            errorList[1] = "error second parameter for if statment is invalid";
+                        }
+                    }
+                    else
+                    {
+                        errorList[0] = "error";
+                        errorList[1] = "error, improper format of if statment. requires a '=, <, >'";
+                    }
                 }
                 else
                 {
