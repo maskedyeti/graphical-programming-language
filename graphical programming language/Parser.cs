@@ -20,7 +20,7 @@ namespace graphical_programming_language
         
 
         static List<string> validCommands = new List<string> { "moveto", "drawto", "clear", "reset", "rectangle"
-                                                        , "circle", "triangle", "pen", "fill"};
+                                                        , "circle", "triangle", "pen", "fill", "if", "endif"};
 
         //contains commands and their requiredparameters for input validation
         static List<string> twoIntCommands = new List<string> {"moveto", "drawto", "rectangle", "triangle"}; 
