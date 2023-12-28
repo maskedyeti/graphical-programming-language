@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -166,7 +167,7 @@ namespace graphical_programming_language
 
         public static bool ifstatment(List<string> commandList)
         {
-            if (int.TryParse(commandList[1], out int num1) && int.TryParse(commandList[3], out int num2)) //checks if 2 numbers are equal
+            if (int.TryParse(commandList[1], out int num1) && int.TryParse(commandList[3], out int num2) && commandList[2] == "=") //checks if 2 numbers are equal
             {
                 if (num1 == num2)
                 {
@@ -176,7 +177,8 @@ namespace graphical_programming_language
                 {
                     return false;
                 }
-            }else if (Parser.variables.ContainsKey(commandList[1]) && int.TryParse(commandList[3], out int num21))
+            }
+            else if (Parser.variables.ContainsKey(commandList[1]) && int.TryParse(commandList[3], out int num21) && commandList[2] == "=")
             {
                 if (Parser.variables[commandList[1]] == num21)
                 {
@@ -186,7 +188,8 @@ namespace graphical_programming_language
                 {
                     return false;
                 }
-            }else if(int.TryParse(commandList[1], out int num11) && Parser.variables.ContainsKey(commandList[3]))
+            }
+            else if (int.TryParse(commandList[1], out int num11) && Parser.variables.ContainsKey(commandList[3]) && commandList[2] == "=")
             {
                 if (Parser.variables[commandList[3]] == num11)
                 {
@@ -196,7 +199,8 @@ namespace graphical_programming_language
                 {
                     return false;
                 }
-            }else if(Parser.variables.ContainsKey(commandList[1]) && Parser.variables.ContainsKey(commandList[3]))
+            }
+            else if (Parser.variables.ContainsKey(commandList[1]) && Parser.variables.ContainsKey(commandList[3]) && commandList[2] == "=")
             {
                 if (Parser.variables[commandList[1]] == Parser.variables[commandList[3]])
                 {
@@ -206,7 +210,101 @@ namespace graphical_programming_language
                 {
                     return false;
                 }
-            }else
+
+
+            }
+            else if (int.TryParse(commandList[1], out int num1g) && int.TryParse(commandList[3], out int num2l) && commandList[2] == ">") //checks if num 'a' is greater than num 'b'
+            {
+                if (num1g > num2l)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (Parser.variables.ContainsKey(commandList[1]) && int.TryParse(commandList[3], out int num2l1) && commandList[2] == ">")
+            {
+                if (Parser.variables[commandList[1]] > num2l1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (int.TryParse(commandList[1], out int num1g1) && Parser.variables.ContainsKey(commandList[3]) && commandList[2] == ">")
+            {
+                if (num1g1 > Parser.variables[commandList[3]])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (Parser.variables.ContainsKey(commandList[1]) && Parser.variables.ContainsKey(commandList[3]) && commandList[2] == ">")
+            {
+                if (Parser.variables[commandList[1]] > Parser.variables[commandList[3]])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            else if (int.TryParse(commandList[1], out int num1l) && int.TryParse(commandList[3], out int num2g) && commandList[2] == "<") //checks if number 'b' is larger than number 'a'
+            {
+                if (num1l < num2g)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (Parser.variables.ContainsKey(commandList[1]) && int.TryParse(commandList[3], out int num2g1) && commandList[2] == "<")
+            {
+                if (Parser.variables[commandList[1]] < num2g1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (int.TryParse(commandList[1], out int num1l1) && Parser.variables.ContainsKey(commandList[3]) && commandList[2] == "<")
+            {
+                if (num1l1 < Parser.variables[commandList[3]])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (Parser.variables.ContainsKey(commandList[1]) && Parser.variables.ContainsKey(commandList[3]) && commandList[2] == "<")
+            {
+                if (Parser.variables[commandList[1]] < Parser.variables[commandList[3]])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            else
             {
                 return false;
             }
