@@ -67,16 +67,16 @@ namespace graphical_programming_language
                             else if (variables.ContainsKey(commandList[1]) && int.TryParse(commandList[2], out _))
                             {
                                 
-                                commandList[1] = variables[commandList[1]].ToString();
+                                //commandList[1] = variables[commandList[1]].ToString();
                             }
                             else if (variables.ContainsKey(commandList[2]) && int.TryParse(commandList[1], out _))
                             {
-                                commandList[2] = variables[commandList[2]].ToString();
+                                //commandList[2] = variables[commandList[2]].ToString();
                             }
                             else if (variables.ContainsKey(commandList[2]) && variables.ContainsKey(commandList[1]))
                             {
-                                commandList[2] = variables[commandList[2]].ToString();
-                                commandList[1] = variables[commandList[1]].ToString();
+                                //commandList[2] = variables[commandList[2]].ToString();
+                                //commandList[1] = variables[commandList[1]].ToString();
                             }
                             else
                             {
@@ -111,7 +111,7 @@ namespace graphical_programming_language
                             {
                             } else if (variables.ContainsKey(commandList[1]))
                             {
-                                commandList[1] = variables[commandList[1]].ToString();
+                                //commandList[1] = variables[commandList[1]].ToString();
                             }
                             else
                             {
@@ -236,6 +236,7 @@ namespace graphical_programming_language
 
         public static List<string> multiLineProcess(System.Windows.Forms.TextBox userInput) //breaks down each line into a list element after validating
         {
+
             List<string> commandLines = new List<string> (); //stores singular lines of command after validation
             List<string> errorList = new List<string> {"error"};
             string[] lines = userInput.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.CompilerServices;
+using System.Diagnostics.Eventing.Reader;
 
 namespace graphical_programming_language
 {
@@ -57,15 +58,16 @@ namespace graphical_programming_language
 
                     {
 
-                        commands.moveTo(penCoordinates, int.Parse(commandList[1]), int.Parse(commandList[2]));
+                        List<int> moveToParameters = twoIntCommandVariable(commandList);
+                        commands.moveTo(penCoordinates, moveToParameters[0], moveToParameters[1]);
 
                     }
 
                     else if ((commandList[0]) == "rectangle")
 
                     {
-                        MessageBox.Show(commandList[1]);
-                        commands.rectangle(g, penCoordinates[0], penCoordinates[1], int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
+                        List<int> rectangleParameters = twoIntCommandVariable(commandList);
+                        commands.rectangle(g, penCoordinates[0], penCoordinates[1], rectangleParameters[0], rectangleParameters[1], fill);
 
                     }
 
@@ -81,7 +83,8 @@ namespace graphical_programming_language
 
                     {
 
-                        commands.circle(g, penCoordinates[0], penCoordinates[1], int.Parse(commandList[1]), fill);
+                        
+                        commands.circle(g, penCoordinates[0], penCoordinates[1], oneIntCommandVariable(commandList), fill);
 
                     }
 
@@ -89,9 +92,10 @@ namespace graphical_programming_language
 
                     {
 
+                        List<int> triangleleParameters = twoIntCommandVariable(commandList);
                         commands.triangle(g, penCoordinates[0], penCoordinates[1],
 
-                                                            int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
+                                                            triangleleParameters[0], triangleleParameters[1], fill);
 
                     }
 
@@ -99,7 +103,8 @@ namespace graphical_programming_language
 
                     {
 
-                        commands.drawto(g, penCoordinates, int.Parse(commandList[1]), int.Parse(commandList[2]));
+                        List<int> drawToParameters = twoIntCommandVariable(commandList);
+                        commands.drawto(g, penCoordinates, drawToParameters[0], drawToParameters[1]);
 
                     }
 
@@ -185,6 +190,46 @@ namespace graphical_programming_language
                 }
             }
         }
+
+        private List<int> twoIntCommandVariable (List<string> commandList)
+        {
+            if (int.TryParse(commandList[1], out int numa1) && int.TryParse(commandList[2], out int numb1))
+            {
+                List<int> validatedCommands = new List<int> { numa1, numb1 };
+                return validatedCommands;
+
+            }
+            else if (int.TryParse(commandList[1], out int numa2) && Parser.variables.ContainsKey(commandList[2]))
+            {
+                List<int> validatedCommands = new List<int> { numa2, Parser.variables[commandList[2]] };
+                return validatedCommands;
+
+            }
+            else if (Parser.variables.ContainsKey(commandList[1]) && int.TryParse(commandList[1], out int numb2))
+            {
+                List<int> validatedCommands = new List<int> { Parser.variables[commandList[1]], numb2 };
+                return validatedCommands;
+
+            }
+            else
+            {
+                List<int> validtaedCommands = new List<int> { Parser.variables[commandList[1]], Parser.variables[commandList[2]] };
+                return validtaedCommands;
+            }
+        }
+
+        private int oneIntCommandVariable (List<string> commandList)
+        {
+            if (int.TryParse(commandList[1], out int num1a))
+            {
+                return num1a;
+            }
+            else
+            {
+                return Parser.variables[commandList[1]];
+            }
+        }
+
         private void textBox2_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) 
@@ -259,10 +304,11 @@ namespace graphical_programming_language
 
                     if (ifAchieved == true)
                     {
+                        
                         executeLine(commandList);
                     }
 
-                    MessageBox.Show(Parser.variables["a"].ToString());
+                    
 
                 }
             }
