@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.CompilerServices;
 
 namespace graphical_programming_language
 {
@@ -39,6 +40,7 @@ namespace graphical_programming_language
         public void executeLine(List<string> commandLine)
         {
             List<string> commandList = commandLine;
+            VariableFactory variableFactory = new VariableFactory();
 
             if (commandList[0] == "error")
             {
@@ -62,7 +64,7 @@ namespace graphical_programming_language
                     else if ((commandList[0]) == "rectangle")
 
                     {
-
+                        MessageBox.Show(commandList[1]);
                         commands.rectangle(g, penCoordinates[0], penCoordinates[1], int.Parse(commandList[1]), int.Parse(commandList[2]), fill);
 
                     }
@@ -144,7 +146,42 @@ namespace graphical_programming_language
                         }
 
                     }
-                
+                    else if (commandList.Count() == 3 && commandList[1] == "=")
+                    {
+                        if (int.TryParse(commandList[2], out int value))
+                        {
+
+                            Variable a = variableFactory.CreateVariable(commandList[0], value);
+                            Parser.variables[a.Name] = a.Value;
+                            
+
+                        }
+
+                    }
+                    else if (commandList.Count() == 5 && commandList[1] == "=" && Parser.operations.Contains(commandList[3]))
+                    {
+
+                        if (int.TryParse(commandList[2], out int operand1) && int.TryParse(commandList[4], out int operand2))
+                        {
+
+                            Variable a = variableFactory.MathsVariable(commandList[0], 0, operand1, operand2, commandList[3]);
+                            Parser.variables[a.Name] = a.Value;
+
+                        }
+                        else if (Parser.variables.ContainsKey(commandList[2]) && int.TryParse(commandList[4], out int operand2a))
+                        {
+                            Variable a = variableFactory.MathsVariable(commandList[0], 0, Parser.variables[commandList[2]], operand2a, commandList[3]);
+                            Parser.variables[a.Name] = a.Value;
+
+                        }
+                        else if (Parser.variables.ContainsKey(commandList[4]) && int.TryParse(commandList[2], out int operand1a))
+                        {
+                            Variable a = variableFactory.MathsVariable(commandList[0], 0, operand1a, Parser.variables[commandList[4]], commandList[3]);
+                            Parser.variables[a.Name] = a.Value;
+                        }
+
+                    }
+
                 }
             }
         }
@@ -154,6 +191,7 @@ namespace graphical_programming_language
             {
                 List<string> commandList = Parser.processSingleLine(textBox2.Text); //checks for valid commands and stores for execution
                 executeLine(commandList);
+                
             }
         }
 
@@ -176,7 +214,9 @@ namespace graphical_programming_language
         {
             List<string> multiLine = Parser.multiLineProcess(textBox1);
             bool ifAchieved = true;
-            int loopLine;
+            int loopStartLine = 0;
+            int loopEndLine = 0;
+            
 
             if (multiLine[0] == "error")
             {
@@ -186,17 +226,33 @@ namespace graphical_programming_language
             {
                 for (int i = 0; i < multiLine.Count; i++)
                 {
-
+                    
                     List<string> commandList = multiLine[i].Split(' ').ToList();
-
+                    if (commandList[0] == "while")
+                    {
+                        if (commands.ifstatment(commandList))
+                        {
+                            
+                            loopStartLine = i-1;
+                        }
+                        else
+                        {
+                            i = loopEndLine;
+                        }
+                    }else if (commandList[0] == "endloop")
+                    {
+                        loopEndLine = i;
+                        i = loopStartLine;
+                    }
                      
 
-                    if (commandList[0] == "if")
+
+                    if (commandList[0] == "if") //checks for if statment and executes next line based on either the if statment being fulfilled or the endif statment being used
                     {
                         ifAchieved = commands.ifstatment(commandList);
                     }
 
-                    if (commandList[0] == "endif")
+                    if (commandList[0] == "endif") 
                     {
                         ifAchieved = true;
                     }
@@ -205,6 +261,9 @@ namespace graphical_programming_language
                     {
                         executeLine(commandList);
                     }
+
+                    MessageBox.Show(Parser.variables["a"].ToString());
+
                 }
             }
         }

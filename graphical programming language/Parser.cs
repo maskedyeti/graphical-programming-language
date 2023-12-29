@@ -16,18 +16,20 @@ namespace graphical_programming_language
     public class Parser //handles input processing and input validation
     {
         public static Dictionary<string, int> variables = new Dictionary<string, int>();
+      
         VariableFactory variableFactory = new VariableFactory();
+      
         
 
         static List<string> validCommands = new List<string> { "moveto", "drawto", "clear", "reset", "rectangle"
-                                                        , "circle", "triangle", "pen", "fill", "if", "endif"};
+                                                        , "circle", "triangle", "pen", "fill", "if", "endif", "while", "endloop"};
 
         //contains commands and their requiredparameters for input validation
         static List<string> twoIntCommands = new List<string> {"moveto", "drawto", "rectangle", "triangle"}; 
         static List<string> noInputCommands = new List<string> {"clear", "reset", "run"};
         static List<string> oneIntCommands = new List<string> { "circle" };
         static List<string> stringCommands = new List<string> { "pen", "fill"};
-        static List<string> operations = new List<string> {"-", "+", "*"};
+        public static List<string> operations = new List<string> {"-", "+", "*"};
         static List<string> validColour = new List<string> { "red", "blue", "black", "green", "purple" };
   
         public static List<string> processSingleLine(String command)//method to split inputted line of command into a list and validate it
@@ -55,23 +57,16 @@ namespace graphical_programming_language
 
                         if (commandList.Count == 3)
                         {
-
-                            if (int.TryParse(commandList[1], out _) == true) //checks if both additional parameters are numbers
+                            //MessageBox.Show(variables[commandList[1]].ToString());
+                            if (int.TryParse(commandList[1], out _) && int.TryParse(commandList[2], out _)) //checks if both additional parameters are numbers
                             {
 
-                                if (int.TryParse(commandList[2], out _) == true)
-                                {
-
-                                }
-                                else
-                                {
-                                    errorList[0] = "error";
-                                    errorList[1] = "invalid/missing parameter, " + commandList[0] + " requires 2 integers";
-                                }
-
+          
                             }
+                            
                             else if (variables.ContainsKey(commandList[1]) && int.TryParse(commandList[2], out _))
                             {
+                                
                                 commandList[1] = variables[commandList[1]].ToString();
                             }
                             else if (variables.ContainsKey(commandList[2]) && int.TryParse(commandList[1], out _))
@@ -82,6 +77,11 @@ namespace graphical_programming_language
                             {
                                 commandList[2] = variables[commandList[2]].ToString();
                                 commandList[1] = variables[commandList[1]].ToString();
+                            }
+                            else
+                            {
+                                errorList[0] = "error";
+                                errorList[1] = "invalid/missing parameter, " + commandList[0] + " requires 2 integers or a valid variable";
                             }
                         }
                         else
@@ -160,10 +160,14 @@ namespace graphical_programming_language
                 {
                     if (int.TryParse(commandList[2], out int value))
                     {
-                        
-                        Variable a = parser.variableFactory.CreateVariable(commandList[0], value);
-                        variables[a.Name] = a.Value;
 
+                        variables[commandList[0]] = 0;
+
+                    }
+                    else
+                    {
+                        errorList[0] = "error";
+                        errorList[1] = "error, variable can only be declared as an integer";
                     }
                     
                 }else if(commandList.Count() == 5 && commandList[1] == "=" && operations.Contains(commandList[3]))
@@ -172,19 +176,19 @@ namespace graphical_programming_language
                     if (int.TryParse(commandList[2], out int operand1) && int.TryParse(commandList[4], out int operand2))
                     {
 
-                        Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1, operand2, commandList[3]);
-                        variables[a.Name] = a.Value;
+                        //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1, operand2, commandList[3]);
+                        //variables[a.Name] = a.Value;
 
                     }else if (variables.ContainsKey(commandList[2]) && int.TryParse(commandList[4], out int operand2a))
                     {
-                        Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, variables[commandList[2]], operand2a, commandList[3]);
-                        variables[a.Name] = a.Value;
+                        //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, variables[commandList[2]], operand2a, commandList[3]);
+                        //variables[a.Name] = a.Value;
                        
                     }
                     else if (variables.ContainsKey(commandList[4]) && int.TryParse(commandList[2], out int operand1a))
                     {
-                        Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1a, variables[commandList[4]], commandList[3]);
-                        variables[a.Name] = a.Value;
+                        //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1a, variables[commandList[4]], commandList[3]);
+                        //variables[a.Name] = a.Value;
                     }
 
                 }else if (commandList[0] == "if")
