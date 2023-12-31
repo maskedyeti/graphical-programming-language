@@ -156,7 +156,7 @@ namespace graphical_programming_language
                         if (int.TryParse(commandList[2], out int value))
                         {
 
-                            Variable a = variableFactory.CreateVariable(commandList[0], value);
+                           Variable a = variableFactory.CreateVariable(commandList[0], value);
                             Parser.variables[a.Name] = a.Value;
                             
 
