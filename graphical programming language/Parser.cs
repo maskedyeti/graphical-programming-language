@@ -209,13 +209,25 @@ namespace graphical_programming_language
                     }
                     else if (variables.ContainsKey(commandList[4]) && int.TryParse(commandList[2], out int operand1a))
                     {
-                        MessageBox.Show(commandList[0]+"nooo");
+                        variables[commandList[0]] = 0;
+                        //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1a, variables[commandList[4]], commandList[3]);
+                        //variables[a.Name] = a.Value;
+                    }
+                    else if (variables.ContainsKey(commandList[2]) && int.TryParse(commandList[4], out int operand1b))
+                    {
+                        variables[commandList[0]] = 0;
+                        //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1a, variables[commandList[4]], commandList[3]);
+                        //variables[a.Name] = a.Value;
+                    }
+                    else if (variables.ContainsKey(commandList[2]) && variables.ContainsKey(commandList[4]))
+                    {
                         variables[commandList[0]] = 0;
                         //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1a, variables[commandList[4]], commandList[3]);
                         //variables[a.Name] = a.Value;
                     }
 
-                }else if (commandList[0] == "if")
+                }
+                else if (commandList[0] == "if")
                 {
                     if (commandList[2] == "=" || commandList[2] == ">" || commandList[2] == "<")
                     {
