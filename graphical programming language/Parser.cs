@@ -16,13 +16,15 @@ namespace graphical_programming_language
     public class Parser //handles input processing and input validation
     {
         public static Dictionary<string, int> variables = new Dictionary<string, int>();
-      
+        public static Dictionary<string, List<string>> methodsProcess = new Dictionary<string, List<string>>();
+        public static Dictionary<string, Dictionary<string, int>> methodVariables = new Dictionary<string, Dictionary<string, int>>();
         VariableFactory variableFactory = new VariableFactory();
       
         
 
         static List<string> validCommands = new List<string> { "moveto", "drawto", "clear", "reset", "rectangle"
-                                                        , "circle", "triangle", "pen", "fill", "if", "endif", "while", "endloop"};
+                                                        , "circle", "triangle", "pen", "fill", "if", "endif", "while", "endloop", "method"
+                                                        ,"endmethod"};
 
         //contains commands and their requiredparameters for input validation
         static List<string> twoIntCommands = new List<string> {"moveto", "drawto", "rectangle", "triangle"}; 
@@ -48,6 +50,7 @@ namespace graphical_programming_language
 
             else if (commandEmpty == false)
             {
+                
                 List<string> commandList = command.Split(' ').ToList(); //splits list based off space 
                 if (validCommands.Contains(commandList[0]))
                 {
@@ -156,7 +159,22 @@ namespace graphical_programming_language
                         }
                     }
 
-                }else if(commandList.Count() == 3 && commandList[1] == "=")
+                    if (commandList[0] == "method")
+                    {
+                        if (commandList.Count() == 3)
+                        {
+                            
+                            validCommands.Add(commandList[1]); //ensures the parser sees the method as a valid command
+                        }
+                        else
+                        {
+                            errorList[0] = ("error");
+                            errorList[1] = ("error, method decleration requires a method name and the use of (), eg. method hellWorld ()");
+                        }
+                    }
+
+                }
+                else if(commandList.Count() == 3 && commandList[1] == "=")
                 {
                     if (int.TryParse(commandList[2], out int value))
                     {
@@ -215,13 +233,16 @@ namespace graphical_programming_language
                         errorList[0] = "error";
                         errorList[1] = "error, improper format of if statment. requires a '=, <, >'";
                     }
+                    
                 }
+
                 else
                 {
-                    
+                    MessageBox.Show("4");
                     errorList[0] = "error";
                     errorList[1] = "unrecognised command";
                 }
+                
                 if (errorList[0] == "error")
                 {
                     return errorList;
@@ -245,6 +266,7 @@ namespace graphical_programming_language
             {
                 List<string> lineCommandList = Parser.processSingleLine(lines[i]); //validates singular line
                 string lineCommandString = string.Join(" ", lineCommandList);
+                
 
                 if (lineCommandList[0] == "error")
                 {

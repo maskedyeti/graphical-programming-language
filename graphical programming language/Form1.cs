@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.Eventing.Reader;
+using System.Collections;
 
 namespace graphical_programming_language
 {
@@ -257,11 +258,17 @@ namespace graphical_programming_language
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             List<string> multiLine = Parser.multiLineProcess(textBox1);
             bool ifAchieved = true;
+            bool methodBool = false;
             int loopStartLine = 0;
             int loopEndLine = 0;
-            
+            List<string> methodCommands = new List<string>();
+            string methodName = " ";
+
+            MethodFactory methodFactory = new MethodFactory();
+
 
             if (multiLine[0] == "error")
             {
@@ -273,6 +280,8 @@ namespace graphical_programming_language
                 {
                     
                     List<string> commandList = multiLine[i].Split(' ').ToList();
+                    
+
                     if (commandList[0] == "while")
                     {
                         if (commands.ifstatment(commandList))
@@ -284,12 +293,19 @@ namespace graphical_programming_language
                         {
                             i = loopEndLine;
                         }
+
                     }else if (commandList[0] == "endloop")
                     {
                         loopEndLine = i;
                         i = loopStartLine;
                     }
-                     
+
+                    if (commandList[0] == "method")
+                    {
+                        
+                        methodBool = true;
+                        methodName = commandList[1];
+                    }
 
 
                     if (commandList[0] == "if") //checks for if statment and executes next line based on either the if statment being fulfilled or the endif statment being used
@@ -297,20 +313,52 @@ namespace graphical_programming_language
                         ifAchieved = commands.ifstatment(commandList);
                     }
 
-                    if (commandList[0] == "endif") 
+                    else if (commandList[0] == "endif") 
                     {
                         ifAchieved = true;
                     }
 
-                    if (ifAchieved == true)
+                    if (ifAchieved == true && methodBool == false)
                     {
-                        
-                        executeLine(commandList);
+                        if (Parser.methodsProcess != null && Parser.methodsProcess.ContainsKey(commandList[0]))
+                        {
+                            MessageBox.Show("method execute");
+                            executeMethod(Parser.methodsProcess[commandList[0]]);
+                        }
+                        else
+                        {
+                            executeLine(commandList);
+                        }
                     }
 
+                    if (methodBool == true)
+                    {
+                        methodCommands.Add(multiLine[i]);
+                    }
                     
+                    if (commandList[0] == "endmethod")
+                    {
+                        
+                        Method newMethod = methodFactory.CreateMethod(methodName, methodCommands);
+                        Parser.methodsProcess[newMethod.Name] = newMethod.commands;
+                        string result = string.Join(" ", Parser.methodsProcess[newMethod.Name]);
+                        methodBool = false;
+                       
+                    }
+
 
                 }
+            }
+        }
+
+        public void executeMethod (List<string> commandList)
+        {
+            MessageBox.Show(commandList[0]);
+            for (int i = 0; i < commandList.Count; i++)
+            {
+                MessageBox.Show(commandList[i]);
+                List<string> commandLineList = commandList[i].Split(' ').ToList();
+                executeLine(commandLineList);
             }
         }
 
