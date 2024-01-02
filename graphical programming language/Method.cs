@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace graphical_programming_language
 {
@@ -13,10 +14,12 @@ namespace graphical_programming_language
         VariableFactory variableFactory = new VariableFactory();
         public string Name { get; set; }
         public List<string> commands { get; set; }
-        public List<string> parameters;
+        public List<string> parameters = new List<string>();
 
-        public void parameterDecleration (List<string> commands)
+        public List<string> parameterDecleration (List<string> commands)
         {
+            string result = string.Join(" ", commands);
+            MessageBox.Show(result+"3333");
             if (commands[2].Length > 2)
             {
                 string ParameterNames = commands[2].TrimStart('(').TrimEnd(')');
@@ -24,31 +27,39 @@ namespace graphical_programming_language
 
                 parameters = ParameterNamesList;
 
-                
+                for (int i = 0; i < ParameterNamesList.Count; i++)
+                {
+                    Variable variableDecleration = variableFactory.CreateVariable(parameters[i].ToString(), 0);
+                    Parser.variables[variableDecleration.Name] = variableDecleration.Value;
+                }
+
+                return parameters;
+
+
             }
+            return null;
         }
 
-        public List<object> ParameterUse (List<string> commands)
+        public void ParameterUse (List<string> commands, List<string> parameterNames)
         {
-            if (commands[2].Length > 2)
+            
+            //MessageBox.Show(result + "4444");
+            if (commands[1].Length > 2)
             {
-                string ParameterNames = commands[2].TrimStart('(').TrimEnd(')');
+                string ParameterNames = commands[1].TrimStart('(').TrimEnd(')');
                 List<string> ParameterValueList = ParameterNames.Split(',').ToList();
-
-                List<object> variables = new List<object>();
 
                 for (int i = 0; i < ParameterValueList.Count; i++)
                 {
-                    Variable variableDecleration = variableFactory.CreateVariable(parameters[i].ToString(), int.Parse(ParameterValueList[i]));
-                    variables.Add(variableDecleration);
+                    string result = string.Join(" ", parameters).ToString();
+                    MessageBox.Show(result + "4444");
+                    Variable variableDecleration = variableFactory.CreateVariable(parameterNames[i], int.Parse(ParameterValueList[i]));
+                    Parser.variables[variableDecleration.Name] = variableDecleration.Value;
                 }
 
-                return variables;
             }
-            else
-            {
-                return null;
-            }
+            
+
         }
     }
 }

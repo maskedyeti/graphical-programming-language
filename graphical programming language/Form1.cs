@@ -185,6 +185,11 @@ namespace graphical_programming_language
                             Variable a = variableFactory.MathsVariable(commandList[0], 0, operand1a, Parser.variables[commandList[4]], commandList[3]);
                             Parser.variables[a.Name] = a.Value;
                         }
+                        else if (Parser.variables.ContainsKey(commandList[4]) && Parser.variables.ContainsKey(commandList[2]))
+                        {
+                            Variable a = variableFactory.MathsVariable(commandList[0], 0, Parser.variables[commandList[2]], Parser.variables[commandList[4]], commandList[3]);
+                            Parser.variables[a.Name] = a.Value;
+                        }
 
                     }
 
@@ -266,6 +271,7 @@ namespace graphical_programming_language
             int loopEndLine = 0;
             List<string> methodCommands = new List<string>();
             string methodName = " ";
+            
 
             MethodFactory methodFactory = new MethodFactory();
 
@@ -322,7 +328,7 @@ namespace graphical_programming_language
                     {
                         if (Parser.methodsProcess != null && Parser.methodsProcess.ContainsKey(commandList[0]))
                         {
-                            MessageBox.Show("method execute");
+                            methodFactory.UseParameter(commandList, Parser.methodParameters);
                             executeMethod(Parser.methodsProcess[commandList[0]]);
                         }
                         else
@@ -353,10 +359,8 @@ namespace graphical_programming_language
 
         public void executeMethod (List<string> commandList)
         {
-            MessageBox.Show(commandList[0]);
             for (int i = 0; i < commandList.Count; i++)
             {
-                MessageBox.Show(commandList[i]);
                 List<string> commandLineList = commandList[i].Split(' ').ToList();
                 executeLine(commandLineList);
             }
