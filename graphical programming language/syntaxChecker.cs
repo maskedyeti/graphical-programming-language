@@ -28,6 +28,9 @@ namespace graphical_programming_language
                 }else if (commandList[0] == "endif")
                 {
                     endIf = true;
+                }else if (commandList[0] == "endWhile")
+                {
+                    endWhile = true;
                 }
 
                 
@@ -36,6 +39,16 @@ namespace graphical_programming_language
             if (!endMethod)
             {
                 throw new NoEndMethodException("methods require and 'endmethod' keyword at the end of their function");
+            }
+
+            if (!endIf)
+            {
+                throw new NoEndIfException("if statments require an endif statment");
+            }
+
+            if (!endWhile)
+            {
+                throw new NoEndWhileException("while statments require an endwhile statment");
             }
 
         }
@@ -146,6 +159,38 @@ namespace graphical_programming_language
             }
         }
 
+        public void CheckWhileDecleration(List<string> commandList)
+        {
+            if (commandList[0] == "while")
+            {
+                if (commandList[2] == "=" || commandList[2] == ">" || commandList[2] == "<")
+                {
+                    if (int.TryParse(commandList[1], out _) || Parser.variables.ContainsKey(commandList[1]))
+                    {
+                        endWhile = false;
+                    }
+                    else
+                    {
+                        throw new WhileInvalidOperatorException($"{commandList[1]} is invalid as a parameter for this if sttament");
+                    }
+
+                    if (int.TryParse(commandList[3], out _) || Parser.variables.ContainsKey(commandList[3]))
+                    {
+                        endWhile = false;
+                    }
+                    else
+                    {
+                        throw new WhileInvalidOperatorException($"{commandList[3]} is invalid as a parameter for this if sttament");
+                    }
+                }
+                else
+                {
+                    throw new WhileInvalidOperatorException($"{commandList[2]} is an invalid operator, please use '=,<,>'");
+                }
+
+            }
+        }
+
         public class InvalidVariableValueDeclerationException : Exception
         {
             public InvalidVariableValueDeclerationException(string message) : base(message) { }
@@ -180,6 +225,22 @@ namespace graphical_programming_language
         public class NoEndIfException : Exception 
         {
             public NoEndIfException(string message) : base(message) { }
+        }
+
+        public class WhileInvalidOperatorException : Exception
+        {
+            public WhileInvalidOperatorException(string message) : base(message) { }
+        }
+
+        public class WhileInvalidOperandException : Exception
+        {
+            public WhileInvalidOperandException(string message) : base(message) { }
+
+        }
+
+        public class NoEndWhileException : Exception
+        {
+            public NoEndWhileException(string message) : base(message) { }
         }
 
 
