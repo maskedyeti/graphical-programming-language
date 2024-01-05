@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.Eventing.Reader;
 using System.Collections;
+using System.Threading;
 
 namespace graphical_programming_language
 {
@@ -19,12 +20,15 @@ namespace graphical_programming_language
         public Form1()
         {
             InitializeComponent();
+            
             commands.DrawingManager(); //initialises pen object
 
         }
 
         public Boolean fill = false;
-        public List<int> penCoordinates = new List<int> { 10, 10 };
+        public List<int> penCoordinates1 = new List<int> { 10, 10 };
+        public List<int> penCoordinates2 = new List<int> { 10, 10 };
+
 
         public OpenFileDialog OpenFileDialog { get; set; }
 
@@ -39,10 +43,16 @@ namespace graphical_programming_language
 
         }
 
-        public void executeLine(List<string> commandLine)
+        public void executeLine(List<string> commandLine, List<int> penCoordinates)
         {
             List<string> commandList = commandLine;
             VariableFactory variableFactory = new VariableFactory();
+
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => executeLine(commandLine, penCoordinates)));
+                return;
+            }
 
             if (commandList[0] == "error")
             {
@@ -123,7 +133,11 @@ namespace graphical_programming_language
 
                         panel1.Invalidate();
 
-                        commands.moveTo(penCoordinates, 10, 10);
+                        penCoordinates1[0] = 10;
+                        penCoordinates1[1] = 10;
+
+                        penCoordinates2[0] = 10;
+                        penCoordinates2[1] = 10;
 
                     }
 
@@ -241,7 +255,7 @@ namespace graphical_programming_language
             if (e.KeyCode == Keys.Enter) 
             {
                 List<string> commandList = Parser.processSingleLine(textBox2.Text); //checks for valid commands and stores for execution
-                executeLine(commandList);
+                executeLine(commandList, penCoordinates1);
                 
             }
         }
@@ -260,47 +274,85 @@ namespace graphical_programming_language
 
         }
 
+        bool multiThread = false;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            List<string> multiLine = Parser.multiLineProcess(textBox1);
+            List<string> multiLine2 = Parser.multiLineProcess(textBox3);
+
+            if (multiLine2.Count == 0)
+            {
+                multiThread = false;
+                List<string> multiLine1 = Parser.multiLineProcess(textBox1);
+                ProcessCommands(multiLine1, penCoordinates1);
+            }
+            else
+            {
+                multiThread = true;
+                Thread thread1 = new Thread(() =>
+                {
+                    List<string> multiLine1 = Parser.multiLineProcess(textBox1);
+
+                    if (multiLine1[0] != "error")
+                    {
+                        
+                            ProcessCommands(multiLine1, penCoordinates1);
+                        
+                        
+                    }
+                });
+                
+
+                Thread thread2 = new Thread(() =>
+                {
+                    if (multiLine2[0] != "error")
+                    {
+                      
+                            ProcessCommands(multiLine2, penCoordinates2);
+                        
+                    }
+                });
+                thread1.Start();
+                thread2.Start();
+            }
+        }
+
+        
+
+        private void ProcessCommands(List<string> multiLine, List<int> penCoordinates)
+        {
             bool ifAchieved = true;
             bool methodBool = false;
             int loopStartLine = 0;
             int loopEndLine = 0;
             List<string> methodCommands = new List<string>();
             string methodName = " ";
-            
 
             MethodFactory methodFactory = new MethodFactory();
 
-
             if (multiLine[0] == "error")
             {
-                
+          
             }
             else
             {
+
                 for (int i = 0; i < multiLine.Count; i++)
                 {
-                    
                     List<string> commandList = multiLine[i].Split(' ').ToList();
-                    
 
                     if (commandList[0] == "while")
                     {
                         if (commands.ifstatment(commandList))
                         {
-                            
-                            loopStartLine = i-1;
+                            loopStartLine = i - 1;
                         }
                         else
                         {
                             i = loopEndLine;
                         }
-
-                    }else if (commandList[0] == "endloop")
+                    }
+                    else if (commandList[0] == "endloop")
                     {
                         loopEndLine = i;
                         i = loopStartLine;
@@ -308,18 +360,15 @@ namespace graphical_programming_language
 
                     if (commandList[0] == "method")
                     {
-                        
                         methodBool = true;
                         methodName = commandList[1];
                     }
 
-
-                    if (commandList[0] == "if") //checks for if statment and executes next line based on either the if statment being fulfilled or the endif statment being used
+                    if (commandList[0] == "if")
                     {
                         ifAchieved = commands.ifstatment(commandList);
                     }
-
-                    else if (commandList[0] == "endif") 
+                    else if (commandList[0] == "endif")
                     {
                         ifAchieved = true;
                     }
@@ -333,7 +382,13 @@ namespace graphical_programming_language
                         }
                         else
                         {
-                            executeLine(commandList);
+                            
+                            executeLine(commandList, penCoordinates);
+
+                            if (multiThread)
+                            {
+                                Thread.Sleep(1000);
+                            }
                         }
                     }
 
@@ -341,28 +396,25 @@ namespace graphical_programming_language
                     {
                         methodCommands.Add(multiLine[i]);
                     }
-                    
+
                     if (commandList[0] == "endmethod")
                     {
-                        
                         Method newMethod = methodFactory.CreateMethod(methodName, methodCommands);
                         Parser.methodsProcess[newMethod.Name] = newMethod.commands;
                         string result = string.Join(" ", Parser.methodsProcess[newMethod.Name]);
                         methodBool = false;
-                       
                     }
-
-
                 }
             }
         }
+
 
         public void executeMethod (List<string> commandList)
         {
             for (int i = 0; i < commandList.Count; i++)
             {
                 List<string> commandLineList = commandList[i].Split(' ').ToList();
-                executeLine(commandLineList);
+                executeLine(commandLineList, penCoordinates1);
             }
         }
 

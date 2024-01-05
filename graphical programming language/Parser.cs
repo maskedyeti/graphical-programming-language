@@ -242,6 +242,10 @@ namespace graphical_programming_language
 
                         if (int.TryParse(commandList[3], out _) || variables.ContainsKey(commandList[3]))
                         {
+                            
+                        }
+                        else
+                        {
                             errorList[0] = "error";
                             errorList[1] = "error second parameter for if statment is invalid";
                         }
