@@ -77,18 +77,21 @@ namespace graphical_programming_language
         public void CheckMethodDecleration(List<string> multiLine)
         {
             bool endMethod = true;
+            int lineNumber = 0;
             for (int i = 0; i < multiLine.Count; i++)
             {
+                
                 List<string> commandList = multiLine[i].Split(' ').ToList();
                 if (commandList[0] == "method")
                 {
                     if (commandList.Count() == 3)
                     {
+                        lineNumber = (i + 1);
                         endMethod = false;
                     }
                     else
                     {
-                        throw new InvalidMethodDeclerationException($"error with {commandList[0]} ,defineing a method requires the 'method' keyword followed by the method name followed by '()'");
+                        throw new InvalidMethodDeclerationException($"error with {commandList[0]} line {(i + 1).ToString()}, defineing a method requires the 'method' keyword followed by the method name followed by '()'");
                     }
                 }else if (commandList[0] == "endmethod")
                 {
@@ -98,13 +101,14 @@ namespace graphical_programming_language
 
             if (!endMethod) 
             {
-                throw new NoEndMethodException("methods require and 'endmethod' keyword at the end of their function");
+                throw new NoEndMethodException($"error line {lineNumber.ToString()},methods require and 'endmethod' keyword at the end of their function");
             }
         }
 
         public void CheckIfDecleration(List<string> multiLine)
         {
             bool endIf = true;
+            int lineNumber = 0;
             for (int i = 0; i < multiLine.Count; i++)
             {
                 List<string> commandList = multiLine[i].Split(' ').ToList();
@@ -115,24 +119,26 @@ namespace graphical_programming_language
                         if (int.TryParse(commandList[1], out _) || Parser.variables.ContainsKey(commandList[1]))
                         {
                             endIf = false;
+                            lineNumber = (i + 1);
                         }
                         else
                         {
-                            throw new IfInvalidOperatorException($"{commandList[1]} is invalid as a parameter for this if sttament");
+                            throw new IfInvalidOperatorException($"{commandList[1]}, line {(i + 1).ToString()}, is invalid as a parameter for this if sttament");
                         }
 
                         if (int.TryParse(commandList[3], out _) || Parser.variables.ContainsKey(commandList[3]))
                         {
                             endIf = false;
+                            lineNumber = (i + 1);
                         }
                         else
                         {
-                            throw new IfInvalidOperatorException($"{commandList[3]} is invalid as a parameter for this if sttament");
+                            throw new IfInvalidOperatorException($"{commandList[3]}, line {(i + 1).ToString()} is invalid as a parameter for this if sttament");
                         }
                     }
                     else
                     {
-                        throw new IfInvalidOperatorException($"{commandList[2]} is an invalid operator, please use '=,<,>'");
+                        throw new IfInvalidOperatorException($"{commandList[2]}, line {(i + 1).ToString()}, is an invalid operator, please use '=,<,>'");
                     }
 
                 }else if (commandList[0] == "endif")
@@ -143,13 +149,14 @@ namespace graphical_programming_language
 
             if (!endIf)
             {
-                throw new NoEndIfException("if statments require an endif statment");
+                throw new NoEndIfException($"line {lineNumber.ToString()},if statments require an endif statment");
             }
         }
 
         public void CheckWhileDecleration(List<string> multiLine)
         {
             bool endWhile = true;
+            int lineNumber = 0;
 
             for (int i = 0; i < multiLine.Count; i++)
             {
@@ -161,32 +168,38 @@ namespace graphical_programming_language
                         if (int.TryParse(commandList[1], out _) || Parser.variables.ContainsKey(commandList[1]))
                         {
                             endWhile = false;
+                            lineNumber = (i + 1);
                         }
                         else
                         {
-                            throw new WhileInvalidOperatorException($"{commandList[1]} is invalid as a parameter for this if sttament");
+                            throw new WhileInvalidOperatorException($"{commandList[1]}, line {i.ToString()}, is invalid as a parameter for this if sttament");
                         }
 
                         if (int.TryParse(commandList[3], out _) || Parser.variables.ContainsKey(commandList[3]))
                         {
                             endWhile = false;
+                            lineNumber = (i + 1);
                         }
                         else
                         {
-                            throw new WhileInvalidOperatorException($"{commandList[3]} is invalid as a parameter for this if sttament");
+                            throw new WhileInvalidOperatorException($"{commandList[3]}, line {(i+1).ToString()}, is invalid as a parameter for this if sttament");
                         }
                     }
                     else
                     {
-                        throw new WhileInvalidOperatorException($"{commandList[2]} is an invalid operator, please use '=,<,>'");
+                        throw new WhileInvalidOperatorException($"{commandList[2]}, line {(i + 1).ToString()}, is an invalid operator, please use '=,<,>'");
                     }
 
+                }else if (commandList[0] == "endloop")
+                {
+                    MessageBox.Show("helllp");
+                    endWhile = true;
                 }
             }
 
             if (!endWhile)
             {
-                throw new NoEndWhileException("while statments require an endwhile statment");
+                throw new NoEndWhileException($"line {lineNumber.ToString()}, while statments require an endloop statment");
             }
         }
 

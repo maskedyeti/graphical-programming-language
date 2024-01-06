@@ -25,7 +25,7 @@ namespace graphical_programming_language
 
         static List<string> validCommands = new List<string> { "moveto", "drawto", "clear", "reset", "rectangle"
                                                         , "circle", "triangle", "pen", "fill", "if", "endif", "while", "endloop", "method"
-                                                        ,"endmethod"};
+                                                        ,"endmethod","drawa","drawrotatedrectangle", "drawrotatedtriangle"};
 
         //contains commands and their requiredparameters for input validation
         static List<string> twoIntCommands = new List<string> {"moveto", "drawto", "rectangle", "triangle"}; 
@@ -180,7 +180,7 @@ namespace graphical_programming_language
                 {
                     if (int.TryParse(commandList[2], out int value))
                     {
-                        MessageBox.Show(commandList[0]);
+                        
                         variables[commandList[0]] = 0;
 
                     }
@@ -201,7 +201,7 @@ namespace graphical_programming_language
 
                     }else if (variables.ContainsKey(commandList[2]) && int.TryParse(commandList[4], out int operand2a))
                     {
-                        MessageBox.Show(commandList[0]+"hello");
+                        
                         variables[commandList[0]] = 0;
                         //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, variables[commandList[2]], operand2a, commandList[3]);
                         //variables[a.Name] = a.Value;
@@ -260,7 +260,7 @@ namespace graphical_programming_language
 
                 else
                 {
-                    MessageBox.Show("404");
+                    MessageBox.Show("404" + commandList[0]);
                     errorList[0] = "error";
                     errorList[1] = "unrecognised command";
                 }

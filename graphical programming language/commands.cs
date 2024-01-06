@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -164,6 +165,55 @@ namespace graphical_programming_language
             moveTo(coordinates, newXcoordinates, newYcoordinates); //moves paintbrush with line 
 
 
+        }
+
+        public static void DrawRotatedRectangle(Graphics g, int x, int y, int width, int height, float angleInDegrees)
+        {
+            // Create a rotation matrix
+            Matrix matrix = new Matrix();
+            matrix.RotateAt(angleInDegrees, new Point(x + width / 2, y + height / 2));
+
+            // Apply the rotation to the graphics object
+            g.Transform = matrix;
+
+            // Draw the rotated rectangle
+            g.DrawRectangle(Pens.Black, x, y, width, height);
+
+            // Reset the transformation to avoid affecting subsequent drawings
+            g.ResetTransform();
+        }
+
+        public static void DrawRotatedTriangle(Graphics g, int x, int y, int width, int height, float angleInDegrees)
+        {
+            // Clear the canvas
+
+            // Create a rotation matrix
+            Matrix matrix = new Matrix();
+            matrix.RotateAt(angleInDegrees, new Point(x + width / 2, y + height / 2));
+
+            // Apply the rotation to the graphics object
+            g.Transform = matrix;
+
+            Point[] trianglePoints = new Point[]
+            {
+                new Point(x, y - height),        // Top point
+                new Point(x, y),                  // Bottom-left point
+                new Point(x + width, y)           // Bottom-right point
+            };
+
+            g.DrawPolygon(Pens.Black, trianglePoints);
+
+
+            // Reset the transformation to avoid affecting subsequent drawings
+            g.ResetTransform();
+        }
+
+        public static void DrawLetterA(Graphics g, int x, int y, int size) //maybe include
+        {
+            using (Font font = new Font("Arial", size))
+            {
+                g.DrawString("A", font, Brushes.Black, x, y);
+            }
         }
 
         public static bool ifstatment(List<string> commandList)

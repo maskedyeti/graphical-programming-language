@@ -111,6 +111,25 @@ namespace graphical_programming_language
 
                     }
 
+                    else if (commandList[0] == "drawrotatedrectangle")
+                    {
+                        List<int> rectangleParameters = threeIntCommandVariable(commandList);
+                        commands.DrawRotatedRectangle(g, penCoordinates[0], penCoordinates[1], rectangleParameters[0], rectangleParameters[1], rectangleParameters[2]);
+                    }
+
+                    else if (commandList[0] == "drawrotatedtriangle")
+                    {
+                        List<int> triangleleParameters = threeIntCommandVariable(commandList);
+                        commands.DrawRotatedTriangle(g, penCoordinates[0], penCoordinates[1],
+
+                                                            triangleleParameters[0], triangleleParameters[1], triangleleParameters[2]);
+                    }
+
+                    else if (commandList[0] == "drawa") //maybe include
+                    {
+                        commands.DrawLetterA(g, penCoordinates[0], penCoordinates[1], 20);
+                    }
+
                     else if ((commandList[0]) == "drawto")
 
                     {
@@ -212,6 +231,51 @@ namespace graphical_programming_language
             }
         }
 
+        private List<int> threeIntCommandVariable(List<string> commandList)
+        {
+            if (int.TryParse(commandList[1], out int numa1) && int.TryParse(commandList[2], out int numb1) && int.TryParse(commandList[3], out int numc1))
+            {
+                List<int> validatedCommands = new List<int> { numa1, numb1, numc1 };
+                return validatedCommands;
+
+            }
+            else if (int.TryParse(commandList[1], out int numa11) && int.TryParse(commandList[2], out int numb11) && Parser.variables.ContainsKey(commandList[3]))
+            {
+                List<int> validatedCommands = new List<int> { numa11, numb11, Parser.variables[commandList[3]] };
+                return validatedCommands;
+
+            }
+            else if (int.TryParse(commandList[1], out int numa2) && Parser.variables.ContainsKey(commandList[2]) && int.TryParse(commandList[2], out int numc2))
+            {
+                List<int> validatedCommands = new List<int> { numa2, Parser.variables[commandList[2]], numc2 };
+                return validatedCommands;
+
+            }
+            else if (int.TryParse(commandList[1], out int numa3) && Parser.variables.ContainsKey(commandList[2]) && Parser.variables.ContainsKey(commandList[3]))
+            {
+                List<int> validatedCommands = new List<int> { numa3, Parser.variables[commandList[2]], Parser.variables[commandList[3]]};
+                return validatedCommands;
+
+            }
+            else if (Parser.variables.ContainsKey(commandList[1]) && int.TryParse(commandList[1], out int numb2) && Parser.variables.ContainsKey(commandList[3]))
+            {
+                List<int> validatedCommands = new List<int> { Parser.variables[commandList[1]], numb2, Parser.variables[commandList[3]]};
+                return validatedCommands;
+
+            }
+            else if (Parser.variables.ContainsKey(commandList[1]) && int.TryParse(commandList[1], out int numb4) && int.TryParse(commandList[2], out int numc4))
+            {
+                List<int> validatedCommands = new List<int> { Parser.variables[commandList[1]], numb4, numc4 };
+                return validatedCommands;
+
+            }
+            else
+            {
+                List<int> validtaedCommands = new List<int> { Parser.variables[commandList[1]], Parser.variables[commandList[2]], Parser.variables[commandList[3]] };
+                return validtaedCommands;
+            }
+        }
+
         private List<int> twoIntCommandVariable (List<string> commandList)
         {
             if (int.TryParse(commandList[1], out int numa1) && int.TryParse(commandList[2], out int numb1))
@@ -276,7 +340,7 @@ namespace graphical_programming_language
         }
 
         public int y = 10;
-        private void syntaxErrorMessage(Exception ex)
+        private void syntaxErrorMessage(Exception ex, string lineNum)
         {
             Label label = new Label();
             label.Width = 500;
@@ -284,7 +348,7 @@ namespace graphical_programming_language
             label.AutoSize = true;
             label.MaximumSize = new Size(panel1.Width - 20, 0);
 
-            label.Text = ($"An error occurred: {ex.Message}");
+            label.Text = ($"An error occurred: {ex.Message} {lineNum}");
             label.Location = new Point(10, y);
             panel1.Controls.Add(label);
 
@@ -307,7 +371,7 @@ namespace graphical_programming_language
             }
             catch (Exception ex)
             {
-                syntaxErrorMessage(ex);
+                syntaxErrorMessage(ex, "method");
                 syntaxErrors = true;
             }
 
@@ -317,7 +381,7 @@ namespace graphical_programming_language
             }
             catch (Exception ex)
             {
-                syntaxErrorMessage(ex);
+                syntaxErrorMessage(ex, "if");
                 syntaxErrors = true;
             }
 
@@ -327,7 +391,7 @@ namespace graphical_programming_language
             }
             catch (Exception ex)
             {
-                syntaxErrorMessage(ex);
+                syntaxErrorMessage(ex, "while");
                 syntaxErrors = true;
             }
 
@@ -339,7 +403,7 @@ namespace graphical_programming_language
                     syntaxChecker.CheckVariableDeclaration(commandList);
                 }catch(Exception ex)
                 {
-                    syntaxErrorMessage(ex);
+                    syntaxErrorMessage(ex, ("line"+i.ToString()));
                     syntaxErrors = true;
                 }
             }
