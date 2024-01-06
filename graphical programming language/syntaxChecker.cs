@@ -7,51 +7,13 @@ using System.Windows.Forms;
 
 namespace graphical_programming_language
 {
-    internal class syntaxChecker
+    public class syntaxChecker
     {
         bool endMethod = true;
         bool endIf = true;
         bool endWhile = true;
-        public void checker(List<string> multiLine)
-        {
+        
 
-            for (int i = 0; i < multiLine.Count; i++)
-            {
-                List<string> commandList = multiLine[i].Split(' ').ToList();
-
-                CheckVariableDeclaration(commandList);
-                CheckVariableDeclaration(commandList);
-
-                if (commandList[0] == "endmethod") 
-                {
-                    endMethod = true;
-                }else if (commandList[0] == "endif")
-                {
-                    endIf = true;
-                }else if (commandList[0] == "endWhile")
-                {
-                    endWhile = true;
-                }
-
-                
-            }
-            
-            if (!endMethod)
-            {
-                throw new NoEndMethodException("methods require and 'endmethod' keyword at the end of their function");
-            }
-
-            if (!endIf)
-            {
-                throw new NoEndIfException("if statments require an endif statment");
-            }
-
-            if (!endWhile)
-            {
-                throw new NoEndWhileException("while statments require an endwhile statment");
-            }
-
-        }
 
         public void CheckVariableDeclaration(List<string> commandList)
         {
@@ -112,82 +74,119 @@ namespace graphical_programming_language
             }
         }
 
-        public void CheckMethodDecleration(List<string> commandList)
+        public void CheckMethodDecleration(List<string> multiLine)
         {
-            if (commandList[0] == "method")
+            bool endMethod = true;
+            for (int i = 0; i < multiLine.Count; i++)
             {
-                if (commandList.Count() == 3)
+                List<string> commandList = multiLine[i].Split(' ').ToList();
+                if (commandList[0] == "method")
                 {
-                    endMethod = false;
-                }
-                else
+                    if (commandList.Count() == 3)
+                    {
+                        endMethod = false;
+                    }
+                    else
+                    {
+                        throw new InvalidMethodDeclerationException($"error with {commandList[0]} ,defineing a method requires the 'method' keyword followed by the method name followed by '()'");
+                    }
+                }else if (commandList[0] == "endmethod")
                 {
-                    throw new InvalidMethodDeclerationException($"{commandList[0]}, error, defineing a method requires the 'method' keyword followed by the method name followed by '()'");
+                    endMethod = true;
                 }
+            }
+
+            if (!endMethod) 
+            {
+                throw new NoEndMethodException("methods require and 'endmethod' keyword at the end of their function");
             }
         }
 
-        public void CheckIfDecleration(List<string> commandList)
+        public void CheckIfDecleration(List<string> multiLine)
         {
-            if (commandList[0] == "if")
+            bool endIf = true;
+            for (int i = 0; i < multiLine.Count; i++)
             {
-                if (commandList[2] == "=" || commandList[2] == ">" || commandList[2] == "<")
+                List<string> commandList = multiLine[i].Split(' ').ToList();
+                if (commandList[0] == "if")
                 {
-                    if (int.TryParse(commandList[1], out _) || Parser.variables.ContainsKey(commandList[1]))
+                    if (commandList[2] == "=" || commandList[2] == ">" || commandList[2] == "<")
                     {
-                        endIf = false;
+                        if (int.TryParse(commandList[1], out _) || Parser.variables.ContainsKey(commandList[1]))
+                        {
+                            endIf = false;
+                        }
+                        else
+                        {
+                            throw new IfInvalidOperatorException($"{commandList[1]} is invalid as a parameter for this if sttament");
+                        }
+
+                        if (int.TryParse(commandList[3], out _) || Parser.variables.ContainsKey(commandList[3]))
+                        {
+                            endIf = false;
+                        }
+                        else
+                        {
+                            throw new IfInvalidOperatorException($"{commandList[3]} is invalid as a parameter for this if sttament");
+                        }
                     }
                     else
                     {
-                        throw new IfInvalidOperatorException($"{commandList[1]} is invalid as a parameter for this if sttament");
+                        throw new IfInvalidOperatorException($"{commandList[2]} is an invalid operator, please use '=,<,>'");
                     }
 
-                    if (int.TryParse(commandList[3], out _) || Parser.variables.ContainsKey(commandList[3]))
-                    {
-                        endIf = false;
-                    }
-                    else
-                    {
-                        throw new IfInvalidOperatorException($"{commandList[3]} is invalid as a parameter for this if sttament");
-                    }
-                }
-                else
+                }else if (commandList[0] == "endif")
                 {
-                    throw new IfInvalidOperatorException($"{commandList[2]} is an invalid operator, please use '=,<,>'");
+                    endIf = true;
                 }
+            }
 
+            if (!endIf)
+            {
+                throw new NoEndIfException("if statments require an endif statment");
             }
         }
 
-        public void CheckWhileDecleration(List<string> commandList)
+        public void CheckWhileDecleration(List<string> multiLine)
         {
-            if (commandList[0] == "while")
+            bool endWhile = true;
+
+            for (int i = 0; i < multiLine.Count; i++)
             {
-                if (commandList[2] == "=" || commandList[2] == ">" || commandList[2] == "<")
+                List<string> commandList = multiLine[i].Split(' ').ToList();
+                if (commandList[0] == "while")
                 {
-                    if (int.TryParse(commandList[1], out _) || Parser.variables.ContainsKey(commandList[1]))
+                    if (commandList[2] == "=" || commandList[2] == ">" || commandList[2] == "<")
                     {
-                        endWhile = false;
+                        if (int.TryParse(commandList[1], out _) || Parser.variables.ContainsKey(commandList[1]))
+                        {
+                            endWhile = false;
+                        }
+                        else
+                        {
+                            throw new WhileInvalidOperatorException($"{commandList[1]} is invalid as a parameter for this if sttament");
+                        }
+
+                        if (int.TryParse(commandList[3], out _) || Parser.variables.ContainsKey(commandList[3]))
+                        {
+                            endWhile = false;
+                        }
+                        else
+                        {
+                            throw new WhileInvalidOperatorException($"{commandList[3]} is invalid as a parameter for this if sttament");
+                        }
                     }
                     else
                     {
-                        throw new WhileInvalidOperatorException($"{commandList[1]} is invalid as a parameter for this if sttament");
+                        throw new WhileInvalidOperatorException($"{commandList[2]} is an invalid operator, please use '=,<,>'");
                     }
 
-                    if (int.TryParse(commandList[3], out _) || Parser.variables.ContainsKey(commandList[3]))
-                    {
-                        endWhile = false;
-                    }
-                    else
-                    {
-                        throw new WhileInvalidOperatorException($"{commandList[3]} is invalid as a parameter for this if sttament");
-                    }
                 }
-                else
-                {
-                    throw new WhileInvalidOperatorException($"{commandList[2]} is an invalid operator, please use '=,<,>'");
-                }
+            }
 
+            if (!endWhile)
+            {
+                throw new NoEndWhileException("while statments require an endwhile statment");
             }
         }
 

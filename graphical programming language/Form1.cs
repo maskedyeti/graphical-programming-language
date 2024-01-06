@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics.Eventing.Reader;
 using System.Collections;
 using System.Threading;
+using System.Linq.Expressions;
 
 namespace graphical_programming_language
 {
@@ -274,46 +275,112 @@ namespace graphical_programming_language
 
         }
 
+        public int y = 10;
+        private void syntaxErrorMessage(Exception ex)
+        {
+            Label label = new Label();
+            label.Width = 500;
+
+            label.AutoSize = true;
+            label.MaximumSize = new Size(panel1.Width - 20, 0);
+
+            label.Text = ($"An error occurred: {ex.Message}");
+            label.Location = new Point(10, y);
+            panel1.Controls.Add(label);
+
+            y += label.Height + 2;
+        }
+
         bool multiThread = false;
 
         private void button1_Click(object sender, EventArgs e)
         {
             List<string> multiLine2 = Parser.multiLineProcess(textBox3);
+            List<string> multiLine1 = Parser.multiLineProcess(textBox1);
+            bool syntaxErrors = false;
 
-            if (multiLine2.Count == 0)
-            {
-                multiThread = false;
-                List<string> multiLine1 = Parser.multiLineProcess(textBox1);
-                ProcessCommands(multiLine1, penCoordinates1);
+            syntaxChecker syntaxChecker = new syntaxChecker();
+
+
+            try{
+                syntaxChecker.CheckMethodDecleration(multiLine1);
             }
-            else
+            catch (Exception ex)
             {
-                multiThread = true;
-                Thread thread1 = new Thread(() =>
-                {
-                    List<string> multiLine1 = Parser.multiLineProcess(textBox1);
+                syntaxErrorMessage(ex);
+                syntaxErrors = true;
+            }
 
-                    if (multiLine1[0] != "error")
+            try
+            {
+                syntaxChecker.CheckIfDecleration(multiLine1);
+            }
+            catch (Exception ex)
+            {
+                syntaxErrorMessage(ex);
+                syntaxErrors = true;
+            }
+
+            try
+            {
+                syntaxChecker.CheckWhileDecleration(multiLine1);
+            }
+            catch (Exception ex)
+            {
+                syntaxErrorMessage(ex);
+                syntaxErrors = true;
+            }
+
+            for (int i = 0; i < multiLine1.Count; i++)
+            {
+                List<string> commandList = multiLine1[i].Split(' ').ToList();
+                try
+                {
+                    syntaxChecker.CheckVariableDeclaration(commandList);
+                }catch(Exception ex)
+                {
+                    syntaxErrorMessage(ex);
+                    syntaxErrors = true;
+                }
+            }
+
+
+                if (!syntaxErrors)
+            {
+                if (multiLine2.Count == 0)
+                {
+                    multiThread = false;
+                    ProcessCommands(multiLine1, penCoordinates1);
+                }
+                else
+                {
+                    multiThread = true;
+                    Thread thread1 = new Thread(() =>
                     {
-                        
+
+
+                        if (multiLine1[0] != "error")
+                        {
+
                             ProcessCommands(multiLine1, penCoordinates1);
-                        
-                        
-                    }
-                });
-                
 
-                Thread thread2 = new Thread(() =>
-                {
-                    if (multiLine2[0] != "error")
+
+                        }
+                    });
+
+
+                    Thread thread2 = new Thread(() =>
                     {
-                      
+                        if (multiLine2[0] != "error")
+                        {
+
                             ProcessCommands(multiLine2, penCoordinates2);
-                        
-                    }
-                });
-                thread1.Start();
-                thread2.Start();
+
+                        }
+                    });
+                    thread1.Start();
+                    thread2.Start();
+                }
             }
         }
 
