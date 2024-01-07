@@ -452,6 +452,8 @@ namespace UnitTests
 
         }
 
+
+
         //if statment tests
         [TestMethod]
         public void TestValidIfstatment()
@@ -507,6 +509,23 @@ namespace UnitTests
 
             //assert
             Assert.AreEqual(15, Parser.variables["myVar"]);
+        }
+
+
+
+        //loop tests
+        [TestMethod]
+        public void TestLoop()
+        {
+            // Arrange
+            Form1 form = new Form1();
+            List<string> inputCode1 = new List<string> { "counter = 0", "while counter < 5", "counter = counter + 1", "endloop" };
+
+            // Act
+            form.ProcessCommands(inputCode1, form.penCoordinates1);
+
+            //assert
+            Assert.AreEqual(5, Parser.variables["counter"]);
         }
     }
 }
