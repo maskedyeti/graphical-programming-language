@@ -3,9 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using static graphical_programming_language.syntaxChecker;
 
 namespace UnitTests
 {
@@ -559,6 +561,22 @@ namespace UnitTests
             //assert
             Assert.AreEqual(100, Parser.variables["myVar"]);
         }
+
+
+
+        //syntax checker
+
+        [TestMethod]
+        public void CheckVariableDeclarationInvalidVariableNameThrowsException()
+        {
+            syntaxChecker syntaxChecker = new syntaxChecker();
+            List<string> commandList = new List<string> { "10", "=", "value" };
+
+            Assert.ThrowsException<InvalidVariableNameException>(() =>
+                syntaxChecker.CheckVariableDeclaration(commandList));
+        }
+
+        
     }
 }
 
