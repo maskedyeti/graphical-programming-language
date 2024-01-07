@@ -9,6 +9,7 @@ using System.IO;
 using System.Windows.Forms;
 using static graphical_programming_language.syntaxChecker;
 
+
 namespace UnitTests
 {
     [TestClass]
@@ -576,7 +577,18 @@ namespace UnitTests
                 syntaxChecker.CheckVariableDeclaration(commandList));
         }
 
-        
+        [TestMethod]
+        public void CheckVariableDeclaration_InvalidVariableValue_ThrowsException()
+        {
+            syntaxChecker syntaxChecker = new syntaxChecker();
+            List<string> commandList = new List<string> { "myVar", "=", "invalidValue" };
+            syntaxChecker syntaxCheck = new syntaxChecker();
+
+            Assert.ThrowsException<InvalidVariableValueDeclerationException>(() =>
+                syntaxChecker.CheckVariableDeclaration(commandList));
+        }
+
+       
     }
 }
 
