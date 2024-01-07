@@ -645,6 +645,34 @@ namespace UnitTests
             Assert.AreEqual(0, Parser.variables["a"]);
             Assert.AreEqual(0, Parser.variables["b"]);
         }
+
+
+
+        //rotating shapes
+
+        [TestMethod]
+        public void RotateRectangle()
+        {
+            //arrange
+            var bitmap = new Bitmap(1, 1);
+            var g = Graphics.FromImage(bitmap);
+            commands commands = new commands();
+
+            //act
+            commands.DrawRotatedRectangle(g, 10, 10, 50, 50, 45);
+        }
+
+        [TestMethod]
+        public void RotateTriangle()
+        {
+            //arrange
+            var bitmap = new Bitmap(1, 1);
+            var g = Graphics.FromImage(bitmap);
+            commands commands = new commands();
+
+            //act
+            commands.DrawRotatedTriangle(g, 10, 10, 50, 50, 45);
+        }
     }
 }
 
