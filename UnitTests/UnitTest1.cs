@@ -484,7 +484,7 @@ namespace UnitTests
         [TestMethod]
         public void TestVariablesIfstatment()
         {
-            //Arrange
+            // Arrange
             Form1 form = new Form1();
             List<string> inputCode1 = new List<string> { "myVar = 10", "myVar2 = 10", "if myVar = myVar2", "myVar = 15", "endif" };
 
