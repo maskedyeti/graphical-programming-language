@@ -420,6 +420,23 @@ namespace UnitTests
             // Assert
             Assert.AreEqual(5, Parser.variables["myVar"]);
         }
+
+        [TestMethod]
+        public void TestVariableDeclarationWithVariable()
+        {
+            // Arrange
+            Form1 form = new Form1();
+            Parser pasrer = new Parser();
+            List<string> inputCode1 = new List<string> { "myVar", "=", "10" };
+            List<string> inputCode2 = new List<string> { "myVar", "=", "myVar", "-", "5" };
+
+            // Act
+            form.executeLine(inputCode1, form.penCoordinates1);
+            form.executeLine(inputCode2, form.penCoordinates1);
+
+            // Assert
+            Assert.AreEqual(5, Parser.variables["myVar"]);
+        }
     }
 
 
