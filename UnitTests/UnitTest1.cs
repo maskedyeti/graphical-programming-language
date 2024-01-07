@@ -405,6 +405,21 @@ namespace UnitTests
             // Assert
             Assert.AreEqual(10, Parser.variables["myVar"]);
         }
+
+        [TestMethod]
+        public void TestVariableDeclarationWithEquation()
+        {
+            // Arrange
+            Form1 form = new Form1();
+            Parser pasrer = new Parser();
+            List<string> inputCode = new List<string> { "myVar", "=", "10", "-","5" };
+
+            // Act
+            form.executeLine(inputCode, form.penCoordinates1);
+
+            // Assert
+            Assert.AreEqual(5, Parser.variables["myVar"]);
+        }
     }
 
 
