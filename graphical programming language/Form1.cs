@@ -357,7 +357,7 @@ namespace graphical_programming_language
 
         bool multiThread = false;
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
             List<string> multiLine2 = Parser.multiLineProcess(textBox3);
             List<string> multiLine1 = Parser.multiLineProcess(textBox1);
@@ -446,6 +446,7 @@ namespace graphical_programming_language
                     thread2.Start();
                 }
             }
+          
         }
 
         

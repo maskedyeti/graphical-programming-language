@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 using static graphical_programming_language.syntaxChecker;
 
@@ -616,6 +617,33 @@ namespace UnitTests
 
             Assert.ThrowsException<NoEndWhileException>(() =>
                 syntaxChecker.CheckWhileDecleration(multiLine));
+        }
+
+
+
+        //multithreading
+
+        [TestMethod]
+        public void TestButton1Click()
+        {
+            // Arrange
+            Form1 form = new Form1(); 
+            TextBox textBox1 = new TextBox();
+            TextBox textBox3 = new TextBox();
+
+            textBox1.Text = "a = 0";
+            textBox3.Text = "b = 0";
+
+            form.textBox1 = textBox1;
+            form.textBox3 = textBox3;
+
+            // Act
+            form.button1_Click(null, EventArgs.Empty);
+
+            // Assert
+
+            Assert.AreEqual(0, Parser.variables["a"]);
+            Assert.AreEqual(0, Parser.variables["b"]);
         }
     }
 }
