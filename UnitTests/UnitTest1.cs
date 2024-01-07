@@ -545,7 +545,20 @@ namespace UnitTests
             Assert.AreEqual(5, Parser.variables["myVar"]);
         }
 
+        [TestMethod]
+        public void TestMethodWithParameter()
+        {
+            // Arrange
+            Form1 form = new Form1();       
+            List<string> inputCode1 = new List<string> { "method bigVar (a,b)", "myVar = a * b", "endmethod", "bigVar (10,10)" };
 
+            // Act
+            Parser.processSingleLine(inputCode1[0]);
+            form.ProcessCommands(inputCode1, form.penCoordinates1);
+
+            //assert
+            Assert.AreEqual(100, Parser.variables["myVar"]);
+        }
     }
 }
 
