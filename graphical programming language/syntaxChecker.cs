@@ -9,10 +9,7 @@ namespace graphical_programming_language
 {
     public class syntaxChecker
     {
-        bool endMethod = true;
-        bool endIf = true;
-        bool endWhile = true;
-        
+    
 
 
         public void CheckVariableDeclaration(List<string> commandList)
@@ -123,7 +120,7 @@ namespace graphical_programming_language
                         }
                         else
                         {
-                            throw new IfInvalidOperatorException($"{commandList[1]}, line {(i + 1).ToString()}, is invalid as a parameter for this if sttament");
+                            throw new IfInvalidOperatorException($"{commandList[1]}, line {(i + 1).ToString()}, is invalid as a parameter for this if stament");
                         }
 
                         if (int.TryParse(commandList[3], out _) || Parser.variables.ContainsKey(commandList[3]))

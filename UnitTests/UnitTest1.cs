@@ -598,6 +598,15 @@ namespace UnitTests
                 syntaxChecker.CheckMethodDecleration(multiLine));
         }
 
+        [TestMethod]
+        public void CheckIfDeclaration_InvalidIfDeclaration_ThrowsException()
+        {
+            syntaxChecker syntaxChecker = new syntaxChecker();
+            List<string> multiLine = new List<string> { "if a = b", "endif" };
+
+            Assert.ThrowsException<IfInvalidOperatorException>(() =>
+                syntaxChecker.CheckIfDecleration(multiLine));
+        }
 
     }
 }
