@@ -588,7 +588,17 @@ namespace UnitTests
                 syntaxChecker.CheckVariableDeclaration(commandList));
         }
 
-       
+        [TestMethod]
+        public void CheckMethodDeclaration_InvalidMethodDeclaration_ThrowsException()
+        {
+            syntaxChecker syntaxChecker = new syntaxChecker();
+            List<string> multiLine = new List<string> { "method", "methodName", "param1", "param2" };
+
+            Assert.ThrowsException<InvalidMethodDeclerationException>(() =>
+                syntaxChecker.CheckMethodDecleration(multiLine));
+        }
+
+
     }
 }
 
