@@ -494,6 +494,20 @@ namespace UnitTests
             //assert
             Assert.AreEqual(15, Parser.variables["myVar"]);
         }
+
+        [TestMethod]
+        public void TestIfStatmentWithComplexExpression()
+        {
+            // Arrange
+            Form1 form = new Form1();
+            List<string> inputCode1 = new List<string> { "myVar = 5", "myVar2 = 10", "if myVar < myVar2", "myVar = 15", "endif" };
+
+            // Act
+            form.ProcessCommands(inputCode1, form.penCoordinates1);
+
+            //assert
+            Assert.AreEqual(15, Parser.variables["myVar"]);
+        }
     }
 }
 
