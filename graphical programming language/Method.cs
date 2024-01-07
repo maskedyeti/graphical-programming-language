@@ -27,7 +27,6 @@ namespace graphical_programming_language
         public List<string> parameterDecleration (List<string> commands)
         {
             string result = string.Join(" ", commands);
-            MessageBox.Show(result+"3333");
             if (commands[2].Length > 2)
             {
                 string ParameterNames = commands[2].TrimStart('(').TrimEnd(')');
@@ -65,7 +64,6 @@ namespace graphical_programming_language
                 for (int i = 0; i < ParameterValueList.Count; i++)
                 {
                     string result = string.Join(" ", parameters).ToString();
-                    MessageBox.Show(result + "4444");
                     Variable variableDecleration = variableFactory.CreateVariable(parameterNames[i], int.Parse(ParameterValueList[i]));
                     Parser.variables[variableDecleration.Name] = variableDecleration.Value;
                 }

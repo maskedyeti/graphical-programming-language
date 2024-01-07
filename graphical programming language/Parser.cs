@@ -17,12 +17,10 @@ namespace graphical_programming_language
     {
         public static Dictionary<string, int> variables = new Dictionary<string, int>();
         public static Dictionary<string, List<string>> methodsProcess = new Dictionary<string, List<string>>();
+
         public static List<string> methodParameters = new List<string>();
-        //public static Dictionary<string, Dictionary<string, int>> methodVariables = new Dictionary<string, Dictionary<string, int>>();
         MethodFactory methodFactory = new MethodFactory();
       
-        
-
         static List<string> validCommands = new List<string> { "moveto", "drawto", "clear", "reset", "rectangle"
                                                         , "circle", "triangle", "pen", "fill", "if", "endif", "while", "endloop", "method"
                                                         ,"endmethod","drawa","drawrotatedrectangle", "drawrotatedtriangle"};
@@ -61,26 +59,23 @@ namespace graphical_programming_language
 
                         if (commandList.Count == 3)
                         {
-                            //MessageBox.Show(variables[commandList[1]].ToString());
+
                             if (int.TryParse(commandList[1], out _) && int.TryParse(commandList[2], out _)) //checks if both additional parameters are numbers
                             {
-
           
                             }
                             
                             else if (variables.ContainsKey(commandList[1]) && int.TryParse(commandList[2], out _))
                             {
-                                
-                                //commandList[1] = variables[commandList[1]].ToString();
+                               
                             }
                             else if (variables.ContainsKey(commandList[2]) && int.TryParse(commandList[1], out _))
                             {
-                                //commandList[2] = variables[commandList[2]].ToString();
+
                             }
                             else if (variables.ContainsKey(commandList[2]) && variables.ContainsKey(commandList[1]))
                             {
-                                //commandList[2] = variables[commandList[2]].ToString();
-                                //commandList[1] = variables[commandList[1]].ToString();
+
                             }
                             else
                             {
@@ -115,7 +110,7 @@ namespace graphical_programming_language
                             {
                             } else if (variables.ContainsKey(commandList[1]))
                             {
-                                //commandList[1] = variables[commandList[1]].ToString();
+
                             }
                             else
                             {
@@ -196,34 +191,25 @@ namespace graphical_programming_language
                     if (int.TryParse(commandList[2], out int operand1) && int.TryParse(commandList[4], out int operand2))
                     {
 
-                        //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1, operand2, commandList[3]);
-                        //variables[a.Name] = a.Value;
-
                     }else if (variables.ContainsKey(commandList[2]) && int.TryParse(commandList[4], out int operand2a))
                     {
                         
                         variables[commandList[0]] = 0;
-                        //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, variables[commandList[2]], operand2a, commandList[3]);
-                        //variables[a.Name] = a.Value;
                        
                     }
                     else if (variables.ContainsKey(commandList[4]) && int.TryParse(commandList[2], out int operand1a))
                     {
                         variables[commandList[0]] = 0;
-                        //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1a, variables[commandList[4]], commandList[3]);
-                        //variables[a.Name] = a.Value;
+
                     }
                     else if (variables.ContainsKey(commandList[2]) && int.TryParse(commandList[4], out int operand1b))
                     {
                         variables[commandList[0]] = 0;
-                        //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1a, variables[commandList[4]], commandList[3]);
-                        //variables[a.Name] = a.Value;
+
                     }
                     else if (variables.ContainsKey(commandList[2]) && variables.ContainsKey(commandList[4]))
                     {
                         variables[commandList[0]] = 0;
-                        //Variable a = parser.variableFactory.MathsVariable(commandList[0], 0, operand1a, variables[commandList[4]], commandList[3]);
-                        //variables[a.Name] = a.Value;
                     }
 
                 }
@@ -260,7 +246,6 @@ namespace graphical_programming_language
 
                 else
                 {
-                    MessageBox.Show("404" + commandList[0]);
                     errorList[0] = "error";
                     errorList[1] = "unrecognised command";
                 }
