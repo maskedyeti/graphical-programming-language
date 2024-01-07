@@ -608,6 +608,15 @@ namespace UnitTests
                 syntaxChecker.CheckIfDecleration(multiLine));
         }
 
+        [TestMethod]
+        public void CheckWhileDeclaration_NoEndWhile_ThrowsException()
+        {
+            syntaxChecker syntaxChecker = new syntaxChecker();
+            List<string> multiLine = new List<string> { "while 10 = 10" };
+
+            Assert.ThrowsException<NoEndWhileException>(() =>
+                syntaxChecker.CheckWhileDecleration(multiLine));
+        }
     }
 }
 
