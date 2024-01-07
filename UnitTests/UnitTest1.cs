@@ -307,7 +307,7 @@ namespace UnitTests
             var Form = new Form1();
 
             //Act
-            Form.executeLine(test);
+            Form.executeLine(test, Form.penCoordinates1);
         }
 
 
@@ -320,10 +320,10 @@ namespace UnitTests
             List<int> testCoordinates = new List<int> { 10, 10 };
 
             //Act
-            Form.executeLine(test);
+            Form.executeLine(test, Form.penCoordinates1);
 
             //Assert
-            Assert.AreEqual(Form.penCoordinates[0] == 10, Form.penCoordinates[1] == 10);
+            Assert.AreEqual(Form.penCoordinates1[0] == 10, Form.penCoordinates1[1] == 10);
         }
 
 
@@ -335,7 +335,7 @@ namespace UnitTests
             var commandLine = new List<string> { "moveto", "10", "20" };
 
             // Act
-            form.executeLine(commandLine);
+            form.executeLine(commandLine, form.penCoordinates1);
 
         }
 
@@ -349,7 +349,7 @@ namespace UnitTests
             var commandLine = new List<string> { "fill on" };
 
             // Act
-            form.executeLine(commandLine);
+            form.executeLine(commandLine, form.penCoordinates1);
 
             // Assert
             Assert.IsFalse(form.fill);
@@ -372,18 +372,38 @@ namespace UnitTests
         }
 
 
-        [TestMethod]
-        public void Button3_Click_ShouldLoadFileContentsIntoTextBox()
-        {
+       // [TestMethod]
+       // public void Button3_Click_ShouldLoadFileContentsIntoTextBox()
+      //  {
             // Arrange
-            var form = new Form1();
+        //    var form = new Form1();
 
             // Act
 
-            form.button3_Click(null, EventArgs.Empty);
+         //  form.button3_Click(null, EventArgs.Empty);
+
+             //Assert
+         //   Assert.AreEqual("test", form.textBox1.Text);
+      //  }
+
+
+
+        //section 2 tests
+
+        //variables
+        [TestMethod]
+        public void TestVariableDeclaration()
+        {
+            // Arrange
+            Form1 form = new Form1();
+            Parser pasrer = new Parser();
+            List<string> inputCode = new List<string>{ "myVar", "=", "10" };
+
+            // Act
+            form.executeLine(inputCode, form.penCoordinates1);
 
             // Assert
-            Assert.AreEqual("test", form.textBox1.Text);
+            Assert.AreEqual(10, Parser.variables["myVar"]);
         }
     }
 

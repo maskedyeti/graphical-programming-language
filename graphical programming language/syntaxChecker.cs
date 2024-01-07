@@ -18,7 +18,7 @@ namespace graphical_programming_language
         public void CheckVariableDeclaration(List<string> commandList)
         {
             
-            if (commandList[1] == "=")
+            if (commandList.Count == 3 && commandList[1] == "=")
             {
                 if (int.TryParse(commandList[0], out _))
                 {

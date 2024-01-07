@@ -398,14 +398,14 @@ namespace graphical_programming_language
             for (int i = 0; i < multiLine1.Count; i++)
             {
                 List<string> commandList = multiLine1[i].Split(' ').ToList();
-                try
-                {
+               try
+               {
                     syntaxChecker.CheckVariableDeclaration(commandList);
-                }catch(Exception ex)
-                {
-                    syntaxErrorMessage(ex, ("line"+i.ToString()));
-                    syntaxErrors = true;
-                }
+               }catch(Exception ex)
+               {
+                   syntaxErrorMessage(ex, ("line"+i.ToString()));
+                   syntaxErrors = true;
+               }
             }
 
 
