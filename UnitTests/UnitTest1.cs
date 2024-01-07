@@ -527,6 +527,25 @@ namespace UnitTests
             //assert
             Assert.AreEqual(5, Parser.variables["counter"]);
         }
+
+
+
+        //method unit tests
+        [TestMethod]
+        public void TestMethodNoParameter()
+        {
+            // Arrange
+            Form1 form = new Form1();
+            List<string> inputCode1 = new List<string> { "method var ()", "myVar = 5", "endmethod", "var ()" };
+
+            // Act
+            form.ProcessCommands(inputCode1, form.penCoordinates1);
+
+            //assert
+            Assert.AreEqual(5, Parser.variables["myVar"]);
+        }
+
+
     }
 }
 
