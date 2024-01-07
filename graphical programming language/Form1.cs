@@ -450,7 +450,7 @@ namespace graphical_programming_language
 
         
 
-        private void ProcessCommands(List<string> multiLine, List<int> penCoordinates)
+        public void ProcessCommands(List<string> multiLine, List<int> penCoordinates)
         {
             bool ifAchieved = true;
             bool methodBool = false;

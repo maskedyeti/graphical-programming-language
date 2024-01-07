@@ -372,32 +372,32 @@ namespace UnitTests
         }
 
 
-       // [TestMethod]
-       // public void Button3_Click_ShouldLoadFileContentsIntoTextBox()
-      //  {
-            // Arrange
+        // [TestMethod]
+        // public void Button3_Click_ShouldLoadFileContentsIntoTextBox()
+        //  {
+        // Arrange
         //    var form = new Form1();
 
-            // Act
+        // Act
 
-         //  form.button3_Click(null, EventArgs.Empty);
+        //  form.button3_Click(null, EventArgs.Empty);
 
-             //Assert
-         //   Assert.AreEqual("test", form.textBox1.Text);
-      //  }
+        //Assert
+        //   Assert.AreEqual("test", form.textBox1.Text);
+        //  }
 
 
 
         //section 2 tests
 
-        //variables
+        //variables tests
         [TestMethod]
         public void TestVariableDeclaration()
         {
             // Arrange
             Form1 form = new Form1();
             Parser pasrer = new Parser();
-            List<string> inputCode = new List<string>{ "myVar", "=", "10" };
+            List<string> inputCode = new List<string> { "myVar", "=", "10" };
 
             // Act
             form.executeLine(inputCode, form.penCoordinates1);
@@ -412,7 +412,7 @@ namespace UnitTests
             // Arrange
             Form1 form = new Form1();
             Parser pasrer = new Parser();
-            List<string> inputCode = new List<string> { "myVar", "=", "10", "-","5" };
+            List<string> inputCode = new List<string> { "myVar", "=", "10", "-", "5" };
 
             // Act
             form.executeLine(inputCode, form.penCoordinates1);
@@ -437,11 +437,69 @@ namespace UnitTests
             // Assert
             Assert.AreEqual(5, Parser.variables["myVar"]);
         }
+
+        [TestMethod]
+        public void TestVariablesUsedAsParameters()
+        {
+            // Arrange
+            Form1 form = new Form1();
+            List<string> inputCode1 = new List<string> { "myVar", "=", "50" };
+            List<string> inputCode2 = new List<string> { "rectanlge", "myVar", "myVar" };
+
+            // Act
+            form.executeLine(inputCode1, form.penCoordinates1);
+            form.executeLine(inputCode2, form.penCoordinates1);
+
+        }
+
+        //if statment tests
+        [TestMethod]
+        public void TestValidIfstatment()
+        {
+            // Arrange
+            Form1 form = new Form1();
+            List<string> inputCode1 = new List<string> { "myVar = 10", "if myVar = 10", "myVar = 15", "endif" };
+
+            // Act
+            form.ProcessCommands(inputCode1, form.penCoordinates1);
+
+            //assert
+            Assert.AreEqual(15, Parser.variables["myVar"]);
+        }
+
+        [TestMethod]
+        public void TestInvalidIfstatment()
+        {
+            // Arrange
+            Form1 form = new Form1();
+            List<string> inputCode1 = new List<string> { "myVar = 10", "if myVar = 1", "myVar = 15", "endif" };
+
+            // Act
+            form.ProcessCommands(inputCode1, form.penCoordinates1);
+
+            //assert
+            Assert.AreEqual(10, Parser.variables["myVar"]);
+        }
+
+        [TestMethod]
+        public void TestVariablesIfstatment()
+        {
+            // Arrange
+            Form1 form = new Form1();
+            List<string> inputCode1 = new List<string> { "myVar = 10", "myVar2 = 10", "if myVar = myVar2", "myVar = 15", "endif" };
+
+            // Act
+            form.ProcessCommands(inputCode1, form.penCoordinates1);
+
+            //assert
+            Assert.AreEqual(15, Parser.variables["myVar"]);
+        }
     }
-
-
-
-
 }
+
+
+
+
+
 
 
