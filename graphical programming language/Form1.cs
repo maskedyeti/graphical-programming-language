@@ -357,8 +357,21 @@ namespace graphical_programming_language
 
         bool multiThread = false;
 
+        /// <summary>
+        /// Event handler for the run button.
+        /// Processes and executes each line.
+        /// </summary>
         public void button1_Click(object sender, EventArgs e)
         {
+            /// <param name="sender">The object that raised the event.</param>
+            /// <param name="e">The event arguments.</param>
+            /// <remarks>
+            /// This method is an event handler for the run button. It processes and executes
+            /// commands entered in TextBox1 and TextBox3. It performs syntax
+            /// checking using a syntaxChecker instance and displays error messages for syntax errors. 
+            /// Multi-threading is performe if textbox2 also has text.
+            /// </remarks>
+           
             List<string> multiLine2 = Parser.multiLineProcess(textBox3);
             List<string> multiLine1 = Parser.multiLineProcess(textBox1);
             bool syntaxErrors = false;
@@ -449,8 +462,12 @@ namespace graphical_programming_language
           
         }
 
-        
 
+        /// <summary>
+        /// Processes a list of commands and executes them based on specified conditions.
+        /// </summary>
+        /// <param name="multiLine">The list of commands to be processed.</param>
+        /// <param name="penCoordinates">The coordinates for drawing operations.</param>
         public void ProcessCommands(List<string> multiLine, List<int> penCoordinates)
         {
             bool ifAchieved = true;
@@ -540,7 +557,10 @@ namespace graphical_programming_language
             }
         }
 
-
+        /// <summary>
+        /// Executes a series of commands from the method.
+        /// </summary>
+        /// <param name="commandList">The list of commands to be executed.</param>
         public void executeMethod (List<string> commandList)
         {
             for (int i = 0; i < commandList.Count; i++)
